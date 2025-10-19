@@ -10,7 +10,7 @@ const props = defineProps({
   },
   width: {
     type: [Number, String],
-    default: "27",
+    default: "25",
   },
   height: {
     type: [Number, String],

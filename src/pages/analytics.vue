@@ -1,7 +1,6 @@
 <script setup>
-
 </script>
 
 <template>
-  analytics
+  <main class="main">analytics</main>
 </template>

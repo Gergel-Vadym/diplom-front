@@ -3,5 +3,6 @@
 </script>
 
 <template>
-  sign-in
+    <main class="main">sign-in</main>
+  
 </template>

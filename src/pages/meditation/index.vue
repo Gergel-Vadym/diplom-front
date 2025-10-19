@@ -3,5 +3,5 @@
 </script>
 
 <template>
-  meditation
+  <main class="main">meditation</main>
 </template>

@@ -4,9 +4,26 @@ html {
 body {
   font-size: 16rem;
   font: var(--font-mohave-reg-16);
+  color: $black-1;
+  background-color: $bg;
 }
 .container {
   margin: 0 auto;
   max-width: 1920rem;
   padding-inline: 100rem;
+  width: 100%;
+}
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  justify-content: space-between;
+}
+.main{
+  flex-grow: 1;
+  padding-top: 100rem;
+}
+a{
+  text-decoration: none;
+  color: $black-1;
 }

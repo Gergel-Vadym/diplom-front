@@ -3,5 +3,6 @@
 </script>
 
 <template>
-  blog [slug]
+        <main class="main">  blog [slug]</main>
+
 </template>

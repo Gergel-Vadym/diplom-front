@@ -1,5 +1,9 @@
 <script setup>
 </script>
 <template>
-  <NuxtPage />
+  <div class="wrapper">
+    <BaseHeader/>
+    <NuxtPage />
+    <BaseFooter/>
+  </div>
 </template>

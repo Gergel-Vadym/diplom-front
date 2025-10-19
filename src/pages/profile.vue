@@ -3,7 +3,5 @@
 </script>
 
 <template>
-  <main class="main">
-    index
-  </main>
+  profile
 </template>

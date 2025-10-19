@@ -1,7 +1,6 @@
 <script setup>
-
 </script>
 
 <template>
-  meditation [slug]
+  <main class="main">meditation [slug]</main>
 </template>
