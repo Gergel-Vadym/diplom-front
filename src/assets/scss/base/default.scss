@@ -1,0 +1,12 @@
+html {
+  font-size: calc(1vw / 19.2);
+}
+body {
+  font-size: 16rem;
+  font: var(--font-mohave-reg-16);
+}
+.container {
+  margin: 0 auto;
+  max-width: 1920rem;
+  padding-inline: 100rem;
+}

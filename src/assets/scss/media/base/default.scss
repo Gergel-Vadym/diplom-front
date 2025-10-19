@@ -1,0 +1,15 @@
+@media #{$laptop} {
+  html {
+    font-size: calc(1vw / 14.4);
+  }
+}
+@media #{$tablet} {
+  html {
+    font-size: calc(1vw / 7.68);
+  }
+}
+@media #{$mobile} {
+  html {
+    font-size: calc(1vw / 3.60);
+  }
+}
