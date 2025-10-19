@@ -3,5 +3,5 @@
 </script>
 
 <template>
-  blog
+        <main class="main">  blog</main>
 </template>

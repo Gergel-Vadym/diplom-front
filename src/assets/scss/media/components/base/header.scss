@@ -1,8 +1,10 @@
-@media #{$laptop} {
-}
-@media #{$tablet} {
-
-}
 @media #{$mobile} {
-
+  .header{
+    &__ul{
+      gap: 15rem;
+    }
+    &__right{
+      gap: 30rem;
+    }
+  }
 }
