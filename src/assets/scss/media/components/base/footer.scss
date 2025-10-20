@@ -2,6 +2,7 @@
 }
 @media #{$tablet} {
   .footer {
+    margin-top: 70rem;
     &__wrapper {
       display: grid;
       grid-template-columns: repeat(2, auto);
@@ -35,6 +36,7 @@
 }
 @media #{$mobile} {
   .footer {
+    margin-top: 50rem;
     &__logo {
       padding: 20rem;
       display: flex;

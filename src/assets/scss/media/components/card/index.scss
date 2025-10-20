@@ -1,0 +1,10 @@
+@media #{$tablet} {
+  .card {
+    width: calc((100% - 30rem) / 2);
+  }
+}
+@media #{$mobile} {
+  .card {
+    width: 100%;
+  }
+}

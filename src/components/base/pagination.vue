@@ -51,10 +51,11 @@ const pages = computed(() => {
     aria-label="Page navigation"
   >
     <ul class="pagination">
-      <li  class="pagination__item">
+      <li class="pagination__item">
         <button
+          type="button"
           :disabled="modelValue <= 1"
-          class="pagination__link"
+          class="pagination__link pagination__link--prev"
           aria-label="Previous page"
           @click="emit('update:modelValue', modelValue - 1)"
         >
@@ -74,6 +75,7 @@ const pages = computed(() => {
         <span v-if="page === '...'" class="pagination__item-dots">...</span>
         <template v-else>
           <button
+            type="button"
             :class="['pagination__link', { active: page === modelValue }]"
             @click="emit('update:modelValue', page)"
           >
@@ -83,8 +85,9 @@ const pages = computed(() => {
       </li>
       <li class="pagination__item">
         <button
+          type="button"
           :disabled="modelValue >= meta.last_page"
-          class="pagination__link"
+          class="pagination__link pagination__link--prev"
           aria-label="Next page"
           @click="emit('update:modelValue', modelValue + 1)"
         >
