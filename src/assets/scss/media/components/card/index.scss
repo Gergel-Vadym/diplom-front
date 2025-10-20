@@ -1,10 +1,33 @@
 @media #{$tablet} {
   .card {
-    width: calc((100% - 30rem) / 2);
+    &--meditation {
+      width: calc((100% - 30rem) / 2);
+    }
+    &--blog {
+      width: 100%;
+    }
   }
 }
 @media #{$mobile} {
   .card {
-    width: 100%;
+    &--meditation {
+      width: 100%;
+    }
+    &--blog {
+      .card{
+        &__img{
+         &-wrapper{
+          width: 100rem;
+          height: 100%;
+         }
+        }
+        &__info{
+          padding: 10rem;
+        }
+        &__title{
+              @include ellipsis(2);
+        }
+      }
+    }
   }
 }

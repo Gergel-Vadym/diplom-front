@@ -1,0 +1,34 @@
+.blog{
+  display: flex;
+  flex-direction: column;
+  gap: 20rem;
+  &__wrapper{
+    max-width: 1100rem;
+    margin-inline: auto;
+    background-color: $white-2;
+    padding: 50rem;
+    border-radius: 20rem;
+  }
+  &__info{
+    display: flex;
+    flex-direction: row;
+    gap: 15rem;
+  }
+    &__autor {
+    font: var(--font-mohave-med-20);
+  }
+  &__readtime {
+    font: var(--font-mohave-med-20);
+  }
+  &__title{
+    font: var(--font-mohave-bold-50);
+  }
+  &__subtitle{
+    font: var(--font-mohave-med-30);
+  }
+  &__img{
+    width: 100%;
+    height: 900rem;
+    object-fit: cover;
+  }
+}
