@@ -1,0 +1,11 @@
+.blogs{
+  display: flex;
+  flex-direction: column;
+  gap: 50rem;
+  margin-top: 100rem;
+  &__wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20rem;
+  }
+}

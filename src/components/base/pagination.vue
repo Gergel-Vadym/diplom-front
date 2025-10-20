@@ -52,7 +52,7 @@ const pages = computed(() => {
   >
     <ul class="pagination">
       <li class="pagination__item">
-        <button
+        <button 
           type="button"
           :disabled="modelValue <= 1"
           class="pagination__link pagination__link--prev"

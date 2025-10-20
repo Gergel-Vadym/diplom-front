@@ -6,6 +6,9 @@ $black:#111111;
 $black-1:#4a4741;
 $white:#ffffff;
 $white-1:#f7f1e8;
+$white-2:#f5ebe1;
+$white-3:#d9caba;
+$blue:#53a1ee;
 
 //font
 :root {
@@ -40,5 +43,24 @@ $laptop: "screen and (max-width: 1439px)";
   -webkit-line-clamp: $lines;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+@mixin scrollbar($direction: vertical) {
+  &::-webkit-scrollbar {
+    @if $direction == horizontal {
+      height: 5rem;
+    } @else {
+      width: 5rem;
+    }
+
+    &-track {
+      background: $white-1;
+      border-radius: 4rem;
+    }
+
+    &-thumb {
+      background: $black-1;
+      border-radius: 4rem;
+    }
+  }
 }
 
