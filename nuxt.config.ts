@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   srcDir: "src/",
+  alias: {
+    "@": "src/",
+  },
 
   app:{
     head:{

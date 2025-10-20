@@ -1,0 +1,21 @@
+@media #{$laptop} {
+
+}
+@media #{$tablet} {
+.meditation{
+  margin-top: 70rem;
+  gap: 40rem;
+  &__wrapper{
+    gap: 15rem;
+  }
+}
+}
+@media #{$mobile} {
+.meditation{
+  margin-top: 50rem;
+  gap: 30rem;
+  &__wrapper{
+    gap: 10rem;
+  }
+}
+}

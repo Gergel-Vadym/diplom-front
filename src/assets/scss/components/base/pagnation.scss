@@ -1,0 +1,30 @@
+.pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10rem;
+  &-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  &__link {
+    display: flex;
+    width: 50rem;
+    height: 50rem;
+    border: 2px solid $white;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: $white;
+    &.active {
+      border: 2px solid $bgDarc;
+    }
+    &--prev{
+      .prev{
+        transform: rotate(180deg);
+      }
+    }
+  }
+}

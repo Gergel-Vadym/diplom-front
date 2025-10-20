@@ -1,77 +1,24 @@
 <script setup>
-
-  const card = ref([
-    {
-      img:"./images/meditation.jpg",
-      title:"test",
-      subtitle:"test test test test test",
-    },
-    {
-      img:"./images/meditation.jpg",
-      title:"test",
-      subtitle:"test test test test test",
-    },
-    {
-      img:"./images/meditation.jpg",
-      title:"test",
-      subtitle:"test test test test test",
-    },
-    {
-      img:"./images/meditation.jpg",
-      title:"test",
-      subtitle:"test test test test test",
-    },
-    {
-      img:"./images/meditation.jpg",
-      title:"test",
-      subtitle:"test test test test test",
-    },
-    {
-      img:"./images/meditation.jpg",
-      title:"test",
-      subtitle:"test test test test test",
-    },
-    {
-      img:"./images/meditation.jpg",
-      title:"test",
-      subtitle:"test test test test test",
-    },
-    {
-      img:"./images/meditation.jpg",
-      title:"test",
-      subtitle:"test test test test test",
-    },
-    {
-      img:"./images/meditation.jpg",
-      title:"test",
-      subtitle:"test test test test test",
-    },
-    {
-      img:"./images/meditation.jpg",
-      title:"test",
-      subtitle:"test test test test test",
-    },
-    {
-      img:"./images/meditation.jpg",
-      title:"test",
-      subtitle:"test test test test test",
-    },
-  ])
-
+  const props = defineProps({
+    data: Object,
+    default: () => ({}),
+  })
 </script>
 <template>
-  <div v-for="(card, index) in card" :key="`card-meditation-${index}`" class="card card--meditation">
-    <img
-      :scr="card.img"
-      :alt="card.title"
-    />
+  <NuxtLink
+    class="card card--meditation"
+    :to="data.link"
+  >
+  <div class="card__img-wrapper">
+    <NuxtImg :src="data.img" :alt="data.title" class="card__img" width="415" height="415" />
+  </div>
     <div class="card__info">
       <div class="card__title">
-        {{ card.title }}
+        {{ data?.title || "" }}
       </div>
       <div class="card__subtitle">
-        {{ card.subtitle }}
+        {{ data?.subtitle || "" }}
       </div>
     </div>
-  </div>
+  </NuxtLink>
 </template>

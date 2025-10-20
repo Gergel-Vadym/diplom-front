@@ -1,0 +1,40 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
+  background-color: $white;
+  border-radius: 20rem;
+  width: calc((100% - 60rem) / 4);
+
+  &:hover {
+    .card__img {
+      transform: scale(1.15);
+    }
+  }
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    &-wrapper {
+      width: 100%;
+      height: 330rem;
+      overflow: hidden;
+      border-radius: 20rem;
+    }
+  }
+  &__info {
+    padding: 20rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+  &__title {
+    font: var(--font-mohave-bold-20);
+    @include ellipsis(2);
+  }
+  &__subtitle {
+    font: var(--font-mohave-med-20);
+    @include ellipsis(2);
+  }
+}

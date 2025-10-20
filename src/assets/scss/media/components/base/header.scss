@@ -1,10 +1,14 @@
 @media #{$mobile} {
   .header{
+    height: 80rem;
     &__ul{
       gap: 15rem;
     }
     &__right{
       gap: 30rem;
+    }
+    &__wrapper{
+      padding-block: 10rem;
     }
   }
 }
