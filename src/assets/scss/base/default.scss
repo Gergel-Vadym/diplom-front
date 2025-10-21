@@ -1,11 +1,12 @@
+@use "./variables" as var;
 html {
   font-size: calc(1vw / 19.2);
 }
 body {
   font-size: 16rem;
   font: var(--font-mohave-reg-16);
-  color: $black-1;
-  background-color: $bg;
+  color: var(--black-1);
+  background-color: var(--bg);
 }
 .container {
   margin: 0 auto;
@@ -25,7 +26,7 @@ body {
 }
 a{
   text-decoration: none;
-  color: $black-1;
+  color: var(--black-1);
 }
 .typography {
   width: 100%;
@@ -120,7 +121,7 @@ a{
   blockquote {
     margin-bottom: 10rem;
     padding: 8rem 0 8rem 8rem;
-    border-left: 2rem solid $black-1;
+    border-left: 2rem solid var(--black-1);
     P {
       margin: 0;
     }
@@ -132,7 +133,7 @@ a{
 
   a {
     text-decoration: underline;
-    color: $blue;
+    color: var(--blue);
     text-underline-offset: 4rem;
   }
 
@@ -146,7 +147,7 @@ a{
     padding-bottom: 20rem;
     border-collapse: separate;
     border-spacing: 0;
-    @include scrollbar(horizontal);
+    @include var.scrollbar(horizontal);
     &::-webkit-scrollbar {
       position: absolute;
       bottom: -20rem;
@@ -155,19 +156,19 @@ a{
   }
   td,
   th {
-    border-top: 1rem solid $black-1;
-    border-left: 1rem solid $black-1;
+    border-top: 1rem solid var(--black-1);
+    border-left: 1rem solid var(--black-1);
     text-align: start;
     transition: border-color 0.2s ease;
     &:last-child {
-      border-right: 1rem solid $black-1;
+      border-right: 1rem solid var(--black-1);
     }
   }
   th {
     padding: 15rem 30rem;
     font-weight: 600;
     white-space: nowrap;
-    background-color: $white-3;
+    background-color: var(--white-3);
     transition: background-color 0.2s ease, border-color 0.2s ease;
   }
   td {
@@ -176,7 +177,7 @@ a{
   }
   &:last-child {
     td {
-      border-bottom: 1rem solid $black-1;
+      border-bottom: 1rem solid var(--black-1);
       min-width: 180rem;
     }
   }
@@ -199,11 +200,11 @@ a{
   tr td,
   tr th {
     border-top: none;
-    border-bottom: 1rem solid $black-1;
+    border-bottom: 1rem solid var(--black-1);
   }
 
   tr:first-child th {
-    border-top: 1rem solid $black-1;
+    border-top: 1rem solid var(--black-1);
     text-align: center;
   }
 }

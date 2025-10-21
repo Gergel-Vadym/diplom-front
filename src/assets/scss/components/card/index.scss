@@ -1,8 +1,9 @@
+@use "../../base/variables" as var;
 .card {
   display: flex;
   flex-direction: column;
   gap: 10rem;
-  background-color: $white;
+  background-color: var(--white);
   border-radius: 20rem;
   &--meditation {
     width: calc((100% - 60rem) / 4);
@@ -53,11 +54,11 @@
   }
   &__title {
     font: var(--font-mohave-bold-20);
-    @include ellipsis(2);
+    @include var.ellipsis(2);
   }
   &__subtitle {
     font: var(--font-mohave-med-20);
-    @include ellipsis(2);
+    @include var.ellipsis(2);
   }
   &__wrapper {
     display: flex;

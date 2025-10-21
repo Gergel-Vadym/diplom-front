@@ -1,4 +1,5 @@
-@media #{$mobile} {
+@use "../../../base/variables" as var;
+@media #{var.$mobile} {
   .header{
     height: 80rem;
     &__ul{

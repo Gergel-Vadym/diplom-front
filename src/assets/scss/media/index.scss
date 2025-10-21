@@ -1,4 +1,4 @@
-@import './base/default';
-@import './base/variables';
-@import './pages/index';
-@import './components/index';
+@use './base/default';
+@use './base/variables';
+@use './pages';
+@use './components';

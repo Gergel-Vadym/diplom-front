@@ -1,9 +1,19 @@
-@media #{$laptop} {
+@use "../../base/variables" as var;
+
+@media #{var.$laptop} {
   html {
     font-size: calc(1vw / 14.4);
   }
+  .typography {
+    * {
+      line-height: 1.21;
+    }
+    img {
+      margin-bottom: 30rem;
+    }
+  }
 }
-@media #{$tablet} {
+@media #{var.$tablet} {
   html {
     font-size: calc(1vw / 7.68);
   }
@@ -11,8 +21,49 @@
     max-width: 768rem;
     padding-inline: 50rem;
   }
+  .typography {
+    display: block;
+    margin-top: 30rem;
+    * {
+      line-height: 1.22;
+    }
+    img {
+      margin-top: 19rem;
+    }
+    h1 {
+      font-size: 28rem;
+    }
+    h2 {
+      font-size: 26rem;
+    }
+    h3 {
+      margin-bottom: 28rem;
+      font-size: 24rem;
+    }
+    h4 {
+      font-size: 22rem;
+    }
+    h5 {
+      margin-bottom: 28rem;
+      font-size: 20rem;
+    }
+    h6 {
+      margin-bottom: 30rem;
+      font-size: 18rem;
+    }
+    img {
+      max-height: 313rem;
+    }
+    table {
+      padding-bottom: 9rem;
+      margin-bottom: 20rem;
+    }
+    blockquote {
+      margin-top: 20rem;
+    }
+  }
 }
-@media #{$mobile} {
+@media #{var.$mobile} {
   html {
     font-size: calc(1vw / 3.6);
   }
@@ -20,7 +71,36 @@
     max-width: 360rem;
     padding-inline: 20rem;
   }
-  .main{
+  .main {
     padding-top: 80rem;
+  }
+  .typography {
+    margin-top: 20rem;
+    * {
+      line-height: 1.215;
+    }
+    h2 {
+      padding-bottom: 21rem;
+    }
+    h3 {
+      padding-bottom: 18rem;
+    }
+    h4 {
+      padding-bottom: 20rem;
+    }
+    h5 {
+      padding-bottom: 18rem;
+    }
+    h6 {
+      padding-bottom: 21rem;
+    }
+    img {
+      padding-bottom: 19rem;
+      max-height: 141rem;
+    }
+    table {
+      margin-bottom: 10rem;
+      max-width: 335rem;
+    }
   }
 }

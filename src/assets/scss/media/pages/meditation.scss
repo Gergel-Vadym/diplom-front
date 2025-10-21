@@ -1,4 +1,5 @@
-@media #{$tablet} {
+@use "../../base/variables" as var;
+@media #{var.$tablet} {
 .meditation{
   margin-top: 70rem;
   gap: 40rem;
@@ -7,7 +8,7 @@
   }
 }
 }
-@media #{$mobile} {
+@media #{var.$mobile} {
 .meditation{
   margin-top: 50rem;
   gap: 30rem;

@@ -1,9 +1,10 @@
-@media #{$laptop} {
+@use "../../base/variables" as var;
+@media #{var.$laptop} {
 
 }
-@media #{$tablet} {
+@media #{var.$tablet} {
 
 }
-@media #{$mobile} {
+@media #{var.$mobile} {
 
 }

@@ -1,8 +1,8 @@
 //base
-@import "./base/index";
+@use "./base";
 //components
-@import "./components/index";
+@use "./components";
 //pages
-@import "./pages/index";
+@use "./pages";
 //media
-@import "./media/index";
+@use "./media";
