@@ -1,4 +1,9 @@
 <script setup>
+//imports
+import { useModalStore } from "~/store/modal";
+
+// variables
+const modalStore = useModalStore();
 const nav = ref([
   {
     name: "meditation",
@@ -38,12 +43,12 @@ const nav = ref([
             </ul>
           </nav>
           <div class="header__user-wrapper">
-            <NuxtLink class="header__user" to="/profile">
+            <!-- <NuxtLink class="header__user" to="/profile">
               <BaseIconSvg iconName="user" width="24" height="24" customClass="header__user-icon"/>
-            </NuxtLink> 
-             <!-- <button class="header__user">
+            </NuxtLink>  -->
+             <button @click="modalStore.toggleModal('login')" class="header__user">
               <BaseIconSvg iconName="user" width="24" height="24" customClass="header__user-icon" />
-            </button> -->
+            </button>
           </div>
         </div>
       </div>

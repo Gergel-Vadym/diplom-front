@@ -14,17 +14,17 @@ body {
   padding-inline: 100rem;
   width: 100%;
 }
-.wrapper{
+.wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
   justify-content: space-between;
 }
-.main{
+.main {
   flex-grow: 1;
   padding-top: 100rem;
 }
-a{
+a {
   text-decoration: none;
   color: var(--black-1);
 }
@@ -208,7 +208,7 @@ a{
     text-align: center;
   }
 }
-.btn{
+.btn {
   display: flex;
   gap: 10rem;
   padding: 20rem 30rem;
@@ -216,10 +216,21 @@ a{
   justify-content: center;
   border: 1px solid var(--black-1);
   border-radius: 20rem;
-  &--light{
+  transition: all 0.3s ease;
+  font: var(--font-mohave-med-20);
+  color: var(--black-1);
+  &:hover {
+    border: 1px solid var(--blue);
+    color: var(--blue);
+  }
+  &--light {
     background-color: var(--blue-1);
     border: 1px solid var(--grey);
     color: var(--white);
-    
+    &:hover {
+      background-color: var(--blue-2);
+      color: var(--white-1);
+      border: 1px solid var(--grey);
+    }
   }
 }

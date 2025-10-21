@@ -1,0 +1,16 @@
+@use "../../../base/variables" as var;
+@media #{var.$tablet} {
+.input {
+  .label{
+    margin-left: 10rem;
+  }
+  input {
+    font-size: 16rem;
+    padding: 10rem;
+  }
+}
+
+}
+@media #{var.$mobile} {
+
+}
