@@ -1,0 +1,49 @@
+@use "../../base/variables" as var;
+@media #{var.$laptop} {
+}
+@media #{var.$tablet} {
+  .profile {
+    &__wrapper {
+      margin-top: 70rem;
+      gap: 70rem;
+      padding: 30rem;
+    }
+    &__form {
+      &-wrapper {
+        .input {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+@media #{var.$mobile} {
+  .profile {
+    &__wrapper {
+      margin-top: 50rem;
+      gap: 20rem;
+      flex-direction: column;
+      padding: 20rem;
+    }
+    &__left {
+      .btn {
+        display: none;
+      }
+    }
+    &__form {
+      &-btn--mobile {
+        display: flex;
+      }
+      &-btns{
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 10rem;
+        .btn{
+          width:calc(50% - 5rem);
+        }
+      }
+    }
+  }
+}

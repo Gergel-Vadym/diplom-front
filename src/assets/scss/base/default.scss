@@ -208,3 +208,18 @@ a{
     text-align: center;
   }
 }
+.btn{
+  display: flex;
+  gap: 10rem;
+  padding: 20rem 30rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--black-1);
+  border-radius: 20rem;
+  &--light{
+    background-color: var(--blue-1);
+    border: 1px solid var(--grey);
+    color: var(--white);
+    
+  }
+}

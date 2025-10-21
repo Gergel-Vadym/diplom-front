@@ -1,0 +1,39 @@
+.profile {
+  display: flex;
+  width: 100%;
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 100rem;
+    max-width: 1200rem;
+    margin: 100rem auto 0 auto;
+    padding: 50rem;
+    border-radius: 30rem;
+    background-color: var(--white);
+  }
+  &__left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font: var(--font-mohave-bold-20);
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20rem;
+    width: 100%;
+    align-items: flex-end;
+    &-wrapper{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20rem;
+      width: 100%;
+      .input{
+        width: calc(50% - 10rem);
+      }
+    }
+    &-btn--mobile{
+      display: none;
+    }
+  }
+}

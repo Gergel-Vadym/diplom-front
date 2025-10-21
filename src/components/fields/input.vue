@@ -1,11 +1,16 @@
 <script setup>
+import { vMaska } from "maska";
+import { useField } from "vee-validate";
+
+const emit = defineEmits(["input:focus", "update:modelValue"]);
+
 const props = defineProps({
   placeholder: {
     type: String,
     default: "",
   },
-  label: {
-    type: String,
+  modelValue: {
+    type: [String, Number],
     default: "",
   },
   type: {
@@ -18,23 +23,88 @@ const props = defineProps({
   },
   className: {
     type: String,
-    default: "input__default",
+    default: "",
   },
+  classInp: {
+    type: String,
+    default: "",
+  },
+  mask: {
+    type: String,
+    default: "",
+  },
+  iconName: {
+    type: [String,Boolean],
+    default: false,
+  },
+  label:{
+    type:String,
+    default:"",
+  }
+});
+const name = toRef(props, "name");
+let optionsMask = ref({
+  mask: props.mask,
+});
+
+function handleFocus(e) {
+  props.mask && !props.modelValue
+    ? (e.target.value = props.mask.replace(/[^+0-9]/gm, ""))
+    : false;
+  emit("input:focus");
+}
+function handleBlur(e) {
+  e.target.value = props.modelValue;
+  emit("input:blur");
+}
+
+function handleInput(e) {
+  emit("update:modelValue", e.target.value);
+}
+const {
+  value: inputValue,
+  errorMessage,
+  // handleBlur,
+  errors,
+  handleChange,
+  meta,
+} = useField(name, undefined, {
+  initialValue: props.modelValue,
 });
 </script>
 
 <template>
-  <div class="input" :class="className">
+  <div
+    class="input"
+    :class="{ className, 'has-error': !meta.valid && errorMessage }"
+  >
+    <label
+      v-if="label"
+      :for="name"
+      class="label"
+      >{{ label }}</label
+    >
     <div class="input__wrapper">
-      <div v-if="label" class="input__label">
-        {{ label }}
-      </div>
-      <input 
-        :name="name" 
-        :id="name" 
-        :type="type" 
-        :placeholder="placeholder" 
+      <input
+        :name="name"
+        :id="name"
+        :type="type"
+        :placeholder="placeholder"
+        :value="modelValue"
+        v-maska:[optionsMask]
+        :class="classInp"
+        @input="handleInput"
+        @focus="handleFocus"
+        @blur="handleBlur"
       />
+      <div class="input__icon" v-if="iconName">
+        <BaseIconSvg :icon-name="iconName" width="18rem" height="17rem" />
+      </div>
+    </div>
+    <div v-if="errorMessage" class="errors">
+      <p>
+        {{ errorMessage }}
+      </p>
     </div>
   </div>
 </template>
