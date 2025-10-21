@@ -22,6 +22,8 @@
     "nuxt": "^3.18.1",
     "vue": "^3.5.20",
     "vue-router": "^4.5.1",
-    "@nuxt/image": "^1.0.0-rc.3"
+    "@nuxt/image": "^1.0.0-rc.3",
+    "vee-validate": "^4.11.8",
+    "maska": "^2.1.10"
   }
 }

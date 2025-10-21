@@ -1,23 +1,23 @@
 .input {
   position: relative;
+  .label{
+    font: var(--font-mohave-med-20);
+    margin-left: 20rem;
+    color: var(--black-1);
+  }
   &__wrapper {
     position: relative;
-  }
-  &__label {
-    font-size: 14rem;
-    color: var(--black-1);
-    margin-bottom: 6rem;
+    margin-top: 10rem;
   }
   input {
     font-size: 16rem;
     transition: 0.3s;
     color: var(--black-1);
-    max-width: 380rem;
     width: 100%;
-    padding: 14rem 110rem 14rem 20rem;
-    background-color: var(--white-1);
-    border: 1px solid var(--white-1);
-    border-radius: 8rem;
+    padding: 20rem;
+    background-color: var(--white);
+    border: 2px solid var(--white-1);
+    border-radius: 20rem;
   }
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
