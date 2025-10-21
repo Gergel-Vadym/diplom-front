@@ -1,19 +1,15 @@
 @use "../../base/variables" as var;
 @media #{var.$tablet} {
-  .blogs {
-    margin-top: 70rem;
-    gap: 40rem;
+  .blog {
     &__wrapper {
-      gap: 15rem;
+      padding: 30rem;
     }
   }
 }
 @media #{var.$mobile} {
-  .blogs {
-    margin-top: 50rem;
-    gap: 30rem;
+  .blog {
     &__wrapper {
-      gap: 10rem;
+      padding: 20rem;
     }
   }
 }

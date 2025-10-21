@@ -5,18 +5,18 @@
   }
   &__label {
     font-size: 14rem;
-    color: $black-1;
+    color: var(--black-1);
     margin-bottom: 6rem;
   }
   input {
     font-size: 16rem;
     transition: 0.3s;
-    color: $black-1;
+    color: var(--black-1);
     max-width: 380rem;
     width: 100%;
     padding: 14rem 110rem 14rem 20rem;
-    background-color: $white-1;
-    border: 1px solid $white-1;
+    background-color: var(--white-1);
+    border: 1px solid var(--white-1);
     border-radius: 8rem;
   }
   input:-webkit-autofill,

@@ -3,7 +3,7 @@
   top: 0;
   display: flex;
   width: 100%;
-  background-color: $white-1;
+  background-color: var(--white-1);
   height: 100rem;
   z-index: 100;
   &__wrapper {
@@ -34,7 +34,7 @@
       bottom: -4rem;
       width: 0;
       height: 2px;
-      background-color: $black;
+      background-color: var(--black);
       transition: width 0.3s ease, left 0.3s ease, right 0.3s ease;
     }
 
@@ -54,10 +54,10 @@
     display: flex;
     &-icon {
       fill: transparent;
-      stroke: $black;
+      stroke: var(--black);
       transition: fill 0.3s ease;
       &:hover {
-        fill: $black;
+        fill: var(--black);
       }
     }
   }

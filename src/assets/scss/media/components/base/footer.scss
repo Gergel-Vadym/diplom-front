@@ -1,6 +1,7 @@
-@media #{$laptop} {
+@use "../../../base/variables" as var;
+@media #{var.$laptop} {
 }
-@media #{$tablet} {
+@media #{var.$tablet} {
   .footer {
     margin-top: 70rem;
     &__wrapper {
@@ -34,7 +35,7 @@
     }
   }
 }
-@media #{$mobile} {
+@media #{var.$mobile} {
   .footer {
     margin-top: 50rem;
     &__logo {

@@ -1,34 +1,40 @@
-.blog{
+.blog {
   display: flex;
   flex-direction: column;
   gap: 20rem;
-  &__wrapper{
+  &__wrapper {
     max-width: 1100rem;
     margin-inline: auto;
-    background-color: $white-2;
+    background-color: var(--white-2);
     padding: 50rem;
     border-radius: 20rem;
   }
-  &__info{
+  &__info {
     display: flex;
     flex-direction: row;
     gap: 15rem;
+    margin-bottom: 10rem;
   }
-    &__autor {
+  &__autor {
     font: var(--font-mohave-med-20);
   }
   &__readtime {
     font: var(--font-mohave-med-20);
   }
-  &__title{
+  &__title {
     font: var(--font-mohave-bold-50);
+    margin-bottom: 10rem;
   }
-  &__subtitle{
+  &__subtitle {
     font: var(--font-mohave-med-30);
   }
-  &__img{
+  &__img {
     width: 100%;
-    height: 900rem;
+    height: 100%;
     object-fit: cover;
+    &-wrapper {
+      width: 100%;
+      height: calc(100dvh - 100rem);
+    }
   }
 }

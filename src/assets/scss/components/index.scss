@@ -1,4 +1,4 @@
-@import './fields/input';
-@import './fields/textarea';
-@import './base/index';
-@import './card/index';
+@use './fields/input';
+@use './fields/textarea';
+@use './base';
+@use './card';

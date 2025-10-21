@@ -1,27 +1,27 @@
-//colors
-$grey:#ced2da;
-$bg:#ecdfd2;
-$bgDarc:#1c1b1a;
-$black:#111111;
-$black-1:#4a4741;
-$white:#ffffff;
-$white-1:#f7f1e8;
-$white-2:#f5ebe1;
-$white-3:#d9caba;
-$blue:#53a1ee;
-
 //font
 :root {
-  --font-mohave-reg-16:normal 400 16rem/130% "Mohave", sans-serif;
-  --font-mohave-med-16:normal 500 16rem/130% "Mohave",  sans-serif;
-  --font-mohave-med-20:normal 500 20rem/130% "Mohave",  sans-serif;
-  --font-mohave-med-25:normal 500 25rem/130% "Mohave",  sans-serif;
-  --font-mohave-med-30:normal 500 30rem/130% "Mohave",  sans-serif;
-  --font-mohave-sem-35:normal 600 35rem/130% "Mohave",  sans-serif;
-  --font-mohave-sem-30:normal 600 30rem/130% "Mohave",  sans-serif;
-  --font-mohave-bold-30:normal 700 30rem/130% "Mohave",  sans-serif;
-  --font-mohave-bold-20:normal 700 20rem/130% "Mohave",  sans-serif;
-  --font-mohave-bold-50:normal 700 50rem/130% "Mohave",  sans-serif;
+  --font-mohave-reg-16: normal 400 16rem/130% "Mohave", sans-serif;
+  --font-mohave-med-16: normal 500 16rem/130% "Mohave", sans-serif;
+  --font-mohave-med-20: normal 500 20rem/130% "Mohave", sans-serif;
+  --font-mohave-med-25: normal 500 25rem/130% "Mohave", sans-serif;
+  --font-mohave-med-30: normal 500 30rem/130% "Mohave", sans-serif;
+  --font-mohave-sem-35: normal 600 35rem/130% "Mohave", sans-serif;
+  --font-mohave-sem-30: normal 600 30rem/130% "Mohave", sans-serif;
+  --font-mohave-bold-30: normal 700 30rem/130% "Mohave", sans-serif;
+  --font-mohave-bold-20: normal 700 20rem/130% "Mohave", sans-serif;
+  --font-mohave-bold-50: normal 700 50rem/130% "Mohave", sans-serif;
+
+  //color
+  --grey: #ced2da;
+  --bg: #ecdfd2;
+  --bgDarc: #1c1b1a;
+  --black: #111111;
+  --black-1: #4a4741;
+  --white: #ffffff;
+  --white-1: #f7f1e8;
+  --white-2: #f5ebe1;
+  --white-3: #d9caba;
+  --blue: #53a1ee;
 }
 
 //media screen size
@@ -35,7 +35,7 @@ $laptop: "screen and (max-width: 1439px)";
 }
 @function wxs($value) {
   @return ($value * 100vw)/360;
-} 
+}
 
 @mixin ellipsis($lines: 1) {
   display: -webkit-box;
@@ -53,14 +53,13 @@ $laptop: "screen and (max-width: 1439px)";
     }
 
     &-track {
-      background: $white-1;
+      background: var(--white-1);
       border-radius: 4rem;
     }
 
     &-thumb {
-      background: $black-1;
+      background: var(--black-1);
       border-radius: 4rem;
     }
   }
 }
-

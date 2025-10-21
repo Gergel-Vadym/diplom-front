@@ -1,7 +1,8 @@
-@media #{$laptop} {
+@use "../../base/variables" as var;
+@media #{var.$laptop} {
 
 }
-@media #{$tablet} {
+@media #{var.$tablet} {
 :root {
   --font-mohave-reg-16:normal 400 15rem/130% "Mohave", sans-serif;
   --font-mohave-med-16:normal 500 15rem/130% "Mohave",  sans-serif;
@@ -15,7 +16,7 @@
   --font-mohave-bold-50:normal 700 35rem/130% "Mohave",  sans-serif;
 }
 }
-@media #{$mobile} {
+@media #{var.$mobile} {
 :root {
   --font-mohave-reg-16:normal 400 14rem/130% "Mohave", sans-serif;
   --font-mohave-med-16:normal 500 14rem/130% "Mohave",  sans-serif;
