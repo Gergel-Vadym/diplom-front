@@ -13,10 +13,6 @@ const props = defineProps({
     type: [String, Number],
     default: "",
   },
-  type: {
-    type: String,
-    default: "text",
-  },
   name: {
     type: String,
     default: "",
@@ -39,6 +35,7 @@ const props = defineProps({
   }
 });
 const name = toRef(props, "name");
+const inputType = ref("password");
 let optionsMask = ref({
   mask: props.mask,
 });
@@ -67,6 +64,10 @@ const {
 } = useField(name, undefined, {
   initialValue: props.modelValue,
 });
+
+function toggleInputType() {
+  inputType.value = inputType.value === "password" ? "text" : "password";
+}
 </script>
 
 <template>
@@ -84,7 +85,7 @@ const {
       <input
         :name="name"
         :id="name"
-        :type="type"
+        :type="inputType"
         :placeholder="placeholder"
         :value="modelValue"
         v-maska:[optionsMask]
@@ -93,6 +94,23 @@ const {
         @focus="handleFocus"
         @blur="handleBlur"
       />
+        <div
+          class="input__icon"
+          @click="toggleInputType"
+        >
+          <BaseIconSvg
+            v-show="inputType === 'password'"
+            icon-name="eye"
+            width="24"
+            height="24"
+          />
+          <BaseIconSvg
+            v-show="inputType === 'text'"
+            icon-name="eye-close"
+            width="24"
+            height="24"
+          />
+        </div>
     </div>
     <div v-if="errorMessage" class="errors">
       <p>

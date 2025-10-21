@@ -1,0 +1,22 @@
+@use "../../../base/variables" as var;
+@media #{var.$tablet} {
+.modal {
+
+  &__dialog {
+    border-radius: 20rem;
+  }
+  &__content {
+    padding: 20rem 10rem 20rem 20rem;
+  }
+  &__header{
+    padding: 10rem;
+  }
+  &__btn-close{
+    .close{
+      width: 25rem;
+      height: 25rem;
+    }
+  }
+}
+
+}

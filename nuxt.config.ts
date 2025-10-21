@@ -42,10 +42,7 @@ export default defineNuxtConfig({
 
   css: ["~/assets/scss/common.scss"],
 
-  modules: [
-    "@nuxt/image",
-    "@nuxtjs/google-fonts",
-  ],
+  modules: ["@nuxt/image", "@nuxtjs/google-fonts", "@pinia/nuxt"],
   googleFonts: {
     families: {
       Mohave: true,

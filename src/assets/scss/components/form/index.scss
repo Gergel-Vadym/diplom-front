@@ -1,0 +1,35 @@
+@use "../../base/variables" as var;
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
+  background-color: var(--white);
+  border-radius: 20rem;
+  &__wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 10rem;
+    padding-right: 15rem;
+    max-height: calc(90dvh - 132rem - 60rem - 124rem);
+    @include var.scrollbar(vertical);
+    overflow: auto;
+
+  }
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10rem;
+    margin-top: 10rem;
+    &-wrapper {
+      font: var(--font-mohave-reg-16);
+    }
+  }
+  &__btn {
+    font: var(--font-mohave-med-20);
+    transition: all 0.3s ease;
+    &:hover {
+      color: var(--blue);
+    }
+  }
+}
