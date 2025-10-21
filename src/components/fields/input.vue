@@ -93,6 +93,14 @@ const {
         @focus="handleFocus"
         @blur="handleBlur"
       />
+      <div class="input__icon" v-if="iconName">
+        <BaseIconSvg :icon-name="iconName" width="18rem" height="17rem" />
+      </div>
+    </div>
+    <div v-if="errorMessage" class="errors">
+      <p>
+        {{ errorMessage }}
+      </p>
     </div>
     <div v-if="errorMessage" class="errors">
       <p>
