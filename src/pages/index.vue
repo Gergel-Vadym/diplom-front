@@ -6,10 +6,10 @@
   <main class="main">
     index
 
-    <FormSignUp/>
+    <!-- <FormSignUp/> -->
 
 
-    <FormSignIn/>
+    <!-- <FormSignIn/> -->
 
 
 

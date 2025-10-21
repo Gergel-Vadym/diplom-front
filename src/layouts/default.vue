@@ -16,7 +16,7 @@ const modalStore = useModalStore();
     @update:model-value="(val) => modalStore.toggleModal('login', val)"
   >
       <template #title>
-      <div class="modal__title">Вхід</div>
+      <h2 class="modal__title">Вхід</h2>
     </template>
     <template #body>
       <ModalContentLogin />
@@ -27,7 +27,7 @@ const modalStore = useModalStore();
     @update:model-value="(val) => modalStore.toggleModal('signUp', val)"
   >
         <template #title>
-      <div class="modal__title">Реєстрація</div>
+      <h2 class="modal__title">Реєстрація</h2>
     </template>
     <template #body>
     <ModalContentSignUp />

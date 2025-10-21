@@ -18,7 +18,7 @@
             <div class="blog__autor">Breez</div>
             <div class="blog__readtime">~ 7 хв.</div>
           </div>
-          <div class="blog__title">test</div>
+          <h1 class="blog__title">test</h1>
           <div class="blog__subtitle">test</div>
           <div class="typography">
             <h1>Медитація: гармонія розуму та тіла</h1>
