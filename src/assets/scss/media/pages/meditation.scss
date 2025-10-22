@@ -6,8 +6,9 @@
     &__wrapper {
       gap: 15rem;
     }
-    &__video{
-      &-wrapper{
+    &__video {
+      border-radius: 30rem;
+      &-wrapper {
         max-width: none;
         max-height: none;
         width: 668rem;
@@ -23,8 +24,9 @@
     &__wrapper {
       gap: 10rem;
     }
-        &__video{
-      &-wrapper{
+    &__video {
+      border-radius: 20rem;
+      &-wrapper {
         max-width: none;
         max-height: none;
         width: 320rem;
