@@ -62,10 +62,6 @@
       margin-top: 20rem;
     }
   }
-  .btn {
-    padding: 15rem 25rem;
-    border-radius: 15rem;
-  }
 }
 @media #{var.$mobile} {
   html {
@@ -108,7 +104,6 @@
     }
   }
   .btn {
-    padding: 10rem 20rem;
     border-radius: 15rem;
   }
 }
