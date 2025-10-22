@@ -1,0 +1,80 @@
+.analytics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50rem;
+  max-width: 1050rem;
+  width: 100%;
+  margin-inline: auto;
+  margin-top: 100rem;
+  &__block {
+    display: flex;
+    flex-direction: column;
+    gap: 20rem;
+    align-items: center;
+    justify-content: center;
+    width: calc(50% - 25rem);
+    &-title{
+      font: var(--font-mohave-bold-30);
+    }
+    .dp__menu {
+      width: 500rem;
+      padding: 20rem;
+      border-radius: 20rem;
+    }
+    .dp__instance_calendar {
+      .dp__menu_inner {
+        font-size: 20rem;
+        padding: 0;
+      }
+    }
+    .dp--header-wrap {
+      margin-bottom: 10rem;
+    }
+    .dp__calendar_header_item {
+      text-align: left;
+    }
+    .dp__action_buttons {
+      justify-content: center;
+      margin-inline-start: unset;
+      padding: 0;
+      .dp__action_select {
+        display: flex;
+        gap: 10rem;
+        padding: 20rem 30rem;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--black-1);
+        border-radius: 20rem;
+        transition: all 0.3s ease;
+        font: var(--font-mohave-med-20);
+        background-color: var(--white);
+        color: var(--black-1);
+        &:hover {
+          border: 1px solid var(--blue);
+          color: var(--blue);
+          background-color: var(--white);
+        }
+      }
+    }
+    .dp__action_row {
+      align-items: center;
+      justify-content: center;
+      padding: 20rem 0 0 0;
+    }
+    .dp__cell_inner {
+      width: 40rem;
+      height: 40rem;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+    .dp__today {
+      border: 1px solid var(--blue-3);
+    }
+    .dp__date_hover {
+      &:hover {
+        background-color: var(--white);
+        border: 1px solid var(--blue);
+      }
+    }
+  }
+}
