@@ -3,7 +3,7 @@ import Slider from "@vueform/slider";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 
-const date = ref(new Date);
+const date = ref(new Date());
 const activeEmotions = ref([]);
 
 const emotions = ref([
@@ -40,7 +40,7 @@ const emotions = ref([
 const form = ref({
   anxiety: 1,
   mood: 1,
-  info:"",
+  info: "",
 });
 
 const toggleEmotion = (value) => {
@@ -58,11 +58,18 @@ const toggleEmotion = (value) => {
       <div class="analytics">
         <div class="analytics__block">
           <h2 class="analytics__block-title">Календар настрою</h2>
-          <VueDatePicker
-            v-model="date"
-            :enable-time-picker="false"
-            :inline="true"
-          />
+          <div class="analytics__block-wrapper">
+            <VueDatePicker
+              v-model="date"
+              :enable-time-picker="false"
+              :inline="true"
+            />
+            <div class="analytics__block-text">
+              <span class="analytics__block-text-desc">
+                Ваш запис про настрій відсутній
+              </span>
+            </div>
+          </div>
         </div>
         <div class="analytics__block">
           <h2 class="analytics__block-title">Форма настрою</h2>
@@ -126,11 +133,13 @@ const toggleEmotion = (value) => {
               </div>
             </div>
 
-            <FieldsTextarea v-model="form.info"/>
+            <FieldsTextarea v-model="form.info" />
 
             <button class="btn btn--light">Зберегти</button>
           </vee-form>
         </div>
+        <div class="analytics__block"></div>
+        <div class="analytics__block"></div>
       </div>
     </div>
   </main>

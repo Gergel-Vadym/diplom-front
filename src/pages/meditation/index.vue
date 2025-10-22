@@ -85,11 +85,11 @@ const paginationMeta = computed(() => {
 <template>
   <main class="main">
     <div class="container">
-      <div class="meditation">
-        <div class="meditation__wrapper">
+      <div class="meditations">
+        <div class="meditations__wrapper">
           <CardMeditation
             v-for="(card, index) in paginatedResults"
-            :key="`card-meditation-${index}`"
+            :key="`card-meditations-${index}`"
             :data="card"
           />
         </div>

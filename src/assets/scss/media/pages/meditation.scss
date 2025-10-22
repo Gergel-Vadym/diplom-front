@@ -1,19 +1,35 @@
 @use "../../base/variables" as var;
 @media #{var.$tablet} {
-.meditation{
-  margin-top: 70rem;
-  gap: 40rem;
-  &__wrapper{
-    gap: 15rem;
+  .meditation {
+    margin-top: 70rem;
+    gap: 40rem;
+    &__wrapper {
+      gap: 15rem;
+    }
+    &__video{
+      &-wrapper{
+        max-width: none;
+        max-height: none;
+        width: 668rem;
+        height: 400rem;
+      }
+    }
   }
-}
 }
 @media #{var.$mobile} {
-.meditation{
-  margin-top: 50rem;
-  gap: 30rem;
-  &__wrapper{
-    gap: 10rem;
+  .meditation {
+    margin-top: 50rem;
+    gap: 30rem;
+    &__wrapper {
+      gap: 10rem;
+    }
+        &__video{
+      &-wrapper{
+        max-width: none;
+        max-height: none;
+        width: 320rem;
+        height: 200rem;
+      }
+    }
   }
-}
 }

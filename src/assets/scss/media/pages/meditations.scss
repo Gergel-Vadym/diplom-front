@@ -1,0 +1,19 @@
+@use "../../base/variables" as var;
+@media #{var.$tablet} {
+.meditations{
+  margin-top: 70rem;
+  gap: 40rem;
+  &__wrapper{
+    gap: 15rem;
+  }
+}
+}
+@media #{var.$mobile} {
+.meditations{
+  margin-top: 50rem;
+  gap: 30rem;
+  &__wrapper{
+    gap: 10rem;
+  }
+}
+}
