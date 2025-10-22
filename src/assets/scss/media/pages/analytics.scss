@@ -1,0 +1,47 @@
+@use "../../base/variables" as var;
+@media #{var.$tablet} {
+.analytics {
+  gap: 30rem;
+  &__block {
+    gap: 15rem;
+    width: 100%;
+    .dp__menu {
+      width: 668rem;
+    }
+    .dp__instance_calendar {
+      .dp__menu_inner {
+        font-size: 20rem;
+      }
+    }
+    .dp--header-wrap {
+      margin-bottom: 10rem;
+    }
+    .dp__action_row {
+      padding: 10rem 0 0 0;
+    }
+    .dp__calendar_row{
+      margin-block: 20rem;
+    }
+    .dp__cell_inner {
+      width: 40rem;
+      height: 40rem;
+    }
+  }
+}
+
+}
+@media #{var.$mobile} {
+.analytics {
+  gap: 20rem;
+  &__block {
+    .dp__menu {
+      width: 320rem;
+    }
+    .dp__instance_calendar {
+      .dp__menu_inner {
+        font-size: 18rem;
+      }
+    }
+  }
+}
+}
