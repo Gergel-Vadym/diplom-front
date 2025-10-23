@@ -21,6 +21,7 @@
   }
 
   &__dialog {
+    position: relative;
     background-color: var(--white);
     width: 600rem;
     min-height: 100rem;

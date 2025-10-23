@@ -1,4 +1,6 @@
 <script setup>
+
+
 const card = ref([
   {
     img: "./images/meditation/meditation1.jpg",
@@ -62,6 +64,17 @@ const card = ref([
   },
 ]);
 
+
+const breadcrumbs = ref([
+  {
+    name: "Головна",
+    url:"/",
+  },
+  {
+    name: "Медитації",
+  },
+]);
+
 const currentPage = ref(1);
 const perPage = ref(8);
 
@@ -86,6 +99,7 @@ const paginationMeta = computed(() => {
   <main class="main">
     <div class="container">
       <div class="meditations">
+        <BaseBreadcrumbs :links="breadcrumbs"/>
         <div class="meditations__wrapper">
           <CardMeditation
             v-for="(card, index) in paginatedResults"

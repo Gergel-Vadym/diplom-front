@@ -1,18 +1,34 @@
 <script setup>
+const route = useRoute();
+const breadcrumbs = ref([
+  {
+    name: "Головна",
+    url: "/",
+  },
+  {
+    name: "Блог",
+    url: "/blog",
+  },
+  {
+    name: route?.params?.slug || "",
+  },
+]);
 </script>
 
 <template>
   <main class="main">
-    <div class="blog">
-      <div class="blog__img-wrapper">
-        <NuxtImg
-          src="./images/blog/blog2.jpg"
-          alt="test"
-          class="blog__img"
-          width="1920"
-        />
-      </div>
-      <div class="container">
+    <div class="container">
+      <div class="blog">
+        <BaseBreadcrumbs :links="breadcrumbs" />
+        <div class="blog__img-wrapper">
+          <NuxtImg
+            src="./images/blog/blog2.jpg"
+            alt="test"
+            class="blog__img"
+            width="1100"
+            height="615"
+          />
+        </div>
         <div class="blog__wrapper">
           <div class="blog__info">
             <div class="blog__autor">Breez</div>

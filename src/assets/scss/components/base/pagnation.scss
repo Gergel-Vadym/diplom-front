@@ -19,7 +19,7 @@
     border-radius: 50%;
     background-color: var(--white);
     &.active {
-      border: 2px solid var(--bgDarc);
+      border: 1.5px solid var(--bgDarc);
     }
     &--prev{
       .prev{

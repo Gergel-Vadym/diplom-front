@@ -13,6 +13,8 @@ const form = ref({
   secondPassword: "",
 });
 
+const loader = ref(false);
+
 function toogleLogin() {
   modalStore.toggleModal("signUp", false);
   setTimeout(() => {
@@ -21,6 +23,7 @@ function toogleLogin() {
 }
 </script>
 <template>
+  <WrapperLoader v-show="loader" v-model="loader" absolute />
   <vee-form class="form form--signUp">
     <div class="form__wrapper">
       <FieldsInput v-model="form.firstName" name="firstName" label="Імя" />

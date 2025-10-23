@@ -1,20 +1,38 @@
 <script setup>
+
+const route = useRoute();
+
+const breadcrumbs = ref([
+  {
+    name: "Головна",
+    url: "/",
+  },
+  {
+    name: "Медитації",
+    url: "/meditation",
+  },
+  {
+    name: route?.params?.slug || "",
+  },
+]);
 </script>
 
 <template>
   <main class="main">
     <div class="container">
       <div class="meditation">
-        <div class="meditation__video-wrapper">
-           <!-- <video src="" class="meditation__video"></video> -->
+        <BaseBreadcrumbs :links="breadcrumbs" />
 
-           <NuxtImg
+        <div class="meditation__video-wrapper">
+          <!-- <video src="" class="meditation__video"></video> -->
+
+          <NuxtImg
             src="./images/meditation/meditation1.jpg"
             class="meditation__video"
             width="1720"
             height="900"
-           />
-         </div>
+          />
+        </div>
         <div class="meditation__wrapper">
           <h1 class="meditation__title">test</h1>
           <div class="meditation__subtitle">

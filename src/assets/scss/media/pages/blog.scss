@@ -1,15 +1,32 @@
 @use "../../base/variables" as var;
 @media #{var.$tablet} {
   .blog {
+    margin-top: 70rem;
     &__wrapper {
       padding: 30rem;
+      max-width: 668rem;
+    }
+    &__img{
+      &-wrapper{
+        width: 668rem;
+
+      }
     }
   }
 }
 @media #{var.$mobile} {
   .blog {
+    margin-top: 50rem;
     &__wrapper {
+      max-width: 320rem;
       padding: 20rem;
+    }
+        &__img{
+      &-wrapper{
+        width: 320rem;
+        height: 200rem;
+
+      }
     }
   }
 }

@@ -1,11 +1,17 @@
 .analytics {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 50rem;
+  margin-top: 100rem;
   max-width: 1050rem;
   width: 100%;
   margin-inline: auto;
-  margin-top: 100rem;
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50rem;
+    width: 100%;
+  }
   &__block {
     display: flex;
     flex-direction: column;
@@ -13,15 +19,15 @@
     align-items: center;
     justify-content: center;
     width: calc(50% - 25rem);
-    &-text{
+    &-text {
       display: flex;
       background-color: var(--white);
-      border-radius: 20rem;
+      border-radius: 30rem;
       padding: 20rem;
       width: 100%;
       height: 200rem;
       position: relative;
-      &-desc{
+      &-desc {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -32,7 +38,7 @@
     &-title {
       font: var(--font-mohave-bold-30);
     }
-    &-wrapper{
+    &-wrapper {
       display: flex;
       flex-direction: column;
       gap: 10rem;
@@ -41,7 +47,7 @@
     .dp__menu {
       width: 500rem;
       padding: 20rem;
-      border-radius: 20rem;
+      border-radius: 30rem;
     }
     .dp__instance_calendar {
       .dp__menu_inner {
@@ -85,7 +91,7 @@
       justify-content: center;
       padding: 10rem 0 0 0;
     }
-    .dp__calendar_row{
+    .dp__calendar_row {
       margin-block: 7rem;
     }
     .dp__cell_inner {
@@ -103,10 +109,10 @@
         border: 1px solid var(--blue-1);
       }
     }
-    .dp__active_date{
+    .dp__active_date {
       background-color: var(--blue-1);
     }
-    .dp__selection_preview{
+    .dp__selection_preview {
       display: none;
     }
   }
@@ -115,7 +121,7 @@
     flex-direction: column;
     background-color: var(--white);
     padding: 20rem;
-    border-radius: 20rem;
+    border-radius: 30rem;
     gap: 10rem;
     width: 100%;
     height: 100%;
@@ -132,7 +138,7 @@
         gap: 20rem;
         height: 80rem;
       }
-      &-title{
+      &-title {
         font: var(--font-mohave-med-16);
       }
 
@@ -197,18 +203,18 @@
         }
       }
     }
-    &-emotions{
+    &-emotions {
       display: flex;
       flex-wrap: wrap;
       gap: 10rem;
-      &__btn{
+      &__btn {
         font: var(--font-mohave-reg-16);
         padding: 10rem 15rem;
         background-color: var(--blue-1);
         border-radius: 20rem;
         color: var(--white);
-        transition: background-color .3s ease;
-        &.active{
+        transition: background-color 0.3s ease;
+        &.active {
           background-color: var(--blue-2);
         }
       }
