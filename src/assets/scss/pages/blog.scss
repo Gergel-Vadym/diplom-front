@@ -1,7 +1,10 @@
 .blog {
+  margin-top: 100rem;
   display: flex;
   flex-direction: column;
   gap: 20rem;
+  max-width: 1100rem;
+  margin-inline: auto;
   &__wrapper {
     max-width: 1100rem;
     margin-inline: auto;
@@ -32,9 +35,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 30rem;
     &-wrapper {
-      width: 100%;
-      height: calc(100dvh - 100rem);
+      width: 1100rem;
+      height: 615rem;
+      margin-inline: auto;
     }
   }
 }
