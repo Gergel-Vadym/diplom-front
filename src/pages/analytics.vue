@@ -2,6 +2,7 @@
 import Slider from "@vueform/slider";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
+import Chart from "chart.js/auto";
 
 const date = ref(new Date());
 const activeEmotions = ref([]);
@@ -17,34 +18,13 @@ const breadcrumbs = ref([
 ]);
 
 const emotions = ref([
-  {
-    name: "Сум",
-    value: "Sumy",
-  },
-  {
-    name: "Злість",
-    value: "Malice",
-  },
-  {
-    name: "Радість",
-    value: "Joy",
-  },
-  {
-    name: "Страх",
-    value: "Fear",
-  },
-  {
-    name: "Цікавість",
-    value: "Interest",
-  },
-  {
-    name: "Безсилля",
-    value: "Impotence",
-  },
-  {
-    name: "Натхнення",
-    value: "Inspiration",
-  },
+  { name: "Сум", value: 4, color: "#00BFFF" },
+  { name: "Злість", value: 7, color: "#FF3366" },
+  { name: "Радість", value: 9, color: "#FFD700" },
+  { name: "Страх", value: 5, color: "#00FA9A" },
+  { name: "Цікавість", value: 8, color: "#9932CC" },
+  { name: "Безсилля", value: 3, color: "#FF8C00" },
+  { name: "Натхнення", value: 10, color: "#00CED1" },
 ]);
 
 const loader = ref(false);
@@ -54,7 +34,6 @@ const form = ref({
   mood: 1,
   info: "",
 });
-
 const toggleEmotion = (value) => {
   if (activeEmotions.value.includes(value)) {
     activeEmotions.value = activeEmotions.value.filter((v) => v !== value);
@@ -62,6 +41,101 @@ const toggleEmotion = (value) => {
     activeEmotions.value.push(value);
   }
 };
+
+const line = ref(null);
+const bars = ref(null);
+
+const moodData = [
+  5, 6, 10, 4, 3, 8, 1, 5, 7, 4, 6, 5, 7, 8, 4, 5, 6, 7, 5, 6, 4, 5, 7, 6, 5, 9,
+  7, 6, 0, 4, 6,
+];
+
+const anxietyData = [
+  2, 3, 5, 7, 1, 4, 3, 2, 6, 5, 3, 4, 5, 6, 2, 3, 4, 5, 3, 4, 2, 4, 6, 5, 3, 6,
+  5, 4, 2, 3, 4,
+];
+
+onMounted(() => {
+  new Chart(line.value, {
+    type: "line",
+    data: {
+      labels: Array.from({ length: 31 }, (_, i) => i + 1),
+      datasets: [
+        {
+          label: "Рівень настрою",
+          data: moodData,
+          borderColor: "#6FA8DC",
+          backgroundColor: "#6FA8DC",
+          borderWidth: 2,
+          cubicInterpolationMode: "monotone",
+          tension: 0.4,
+          pointRadius: 0,
+        },
+        {
+          label: "Рівень тривоги",
+          data: anxietyData,
+          borderColor: "#E06666",
+          backgroundColor: "#E06666",
+          borderWidth: 2,
+          cubicInterpolationMode: "monotone",
+          tension: 0.4,
+          pointRadius: 0,
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: "top" },
+        title: {
+          text: "Рівень настрою та тривоги за місяць",
+        },
+      },
+      scales: {
+        y: {
+          min: 0,
+          max: 10,
+          ticks: {
+            autoSkip: false,
+            padding: 0,
+            maxRotation: 0,
+          },
+        },
+        x: {
+          ticks: {
+            autoSkip: false,
+            padding: 0,
+            maxRotation: 0,
+            callback: (value, index, values) => {
+              return index + 1 === 1 ||
+                index + 1 === values.length ||
+                ((index + 1) % 5 === 0 && values.length - index + 1 >= 5)
+                ? index + 1
+                : "";
+            },
+          },
+        },
+      },
+    },
+  });
+
+  new Chart(bars.value, {
+    type: "doughnut",
+    data: {
+      labels: emotions.value.map((e) => e.name),
+      datasets: [
+        {
+          data: emotions.value.map((e) => e.value),
+          backgroundColor: emotions.value.map((e) => e.color),
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      cutout: "40%",
+    },
+  });
+});
 </script>
 
 <template>
@@ -112,7 +186,7 @@ const toggleEmotion = (value) => {
                     >
                   </div>
                 </div>
-  
+
                 <div class="analytics__form-emotions">
                   <button
                     v-for="(item, index) in emotions"
@@ -125,7 +199,7 @@ const toggleEmotion = (value) => {
                     {{ item.name }}
                   </button>
                 </div>
-  
+
                 <div class="analytics__form-slider">
                   <div class="analytics__form-slider__wrapper">
                     <div class="form-slider-title">
@@ -149,15 +223,33 @@ const toggleEmotion = (value) => {
                     >
                   </div>
                 </div>
-  
-                <FieldsTextarea v-model="form.info" />
-  
+
+                <FieldsTextarea v-model="form.info" placeholder="Запис про настрій" />
+
                 <button class="btn btn--light">Зберегти</button>
               </vee-form>
             </WrapperLoader>
           </div>
-          <div class="analytics__block"></div>
-          <div class="analytics__block"></div>
+          <div class="analytics__block">
+            <div class="analytics__chart-wrapper">
+              <h2 class="analytics__block-title">Як змінювався мій настрій</h2>
+              <div class="analytics__chart">
+                <div class="analytics__chart-container">
+                  <canvas ref="line"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="analytics__block">
+            <div class="analytics__chart-wrapper">
+              <h2 class="analytics__block-title">Які емоції переважали</h2>
+              <div class="analytics__chart">
+                <div class="analytics__chart-container">
+                  <canvas ref="bars"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

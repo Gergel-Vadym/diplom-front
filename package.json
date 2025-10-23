@@ -24,6 +24,7 @@
     "@nuxt/image": "^1.0.0-rc.3",
     "@vueform/slider": "^2.1.10",
     "@vuepic/vue-datepicker": "^11.0.3",
+    "chart.js": "^4.5.1",
     "maska": "^2.1.10",
     "nuxt": "^3.18.1",
     "vee-validate": "^4.11.8",
