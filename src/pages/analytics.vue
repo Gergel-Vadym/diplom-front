@@ -18,13 +18,13 @@ const breadcrumbs = ref([
 ]);
 
 const emotions = ref([
-  { name: "Сум", value: 4, color: "#00BFFF" },
-  { name: "Злість", value: 7, color: "#FF3366" },
-  { name: "Радість", value: 9, color: "#FFD700" },
-  { name: "Страх", value: 5, color: "#00FA9A" },
-  { name: "Цікавість", value: 8, color: "#9932CC" },
-  { name: "Безсилля", value: 3, color: "#FF8C00" },
-  { name: "Натхнення", value: 10, color: "#00CED1" },
+  { name: "Сум", value: 4, color: "#6FA8DC" },
+  { name: "Злість", value: 7, color: "#E06666" },
+  { name: "Радість", value: 9, color: "#FFD966" },
+  { name: "Страх", value: 5, color: "#93C47D" },
+  { name: "Цікавість", value: 8, color: "#8E7CC3" },
+  { name: "Безсилля", value: 3, color: "#76A5AF" },
+  { name: "Натхнення", value: 10, color: "#C27BA0" }
 ]);
 
 const loader = ref(false);
@@ -66,20 +66,20 @@ onMounted(() => {
           data: moodData,
           borderColor: "#6FA8DC",
           backgroundColor: "#6FA8DC",
-          borderWidth: 2,
+          borderWidth: 3,
           cubicInterpolationMode: "monotone",
           tension: 0.4,
-          pointRadius: 0,
+          pointRadius: 2,
         },
         {
           label: "Рівень тривоги",
           data: anxietyData,
           borderColor: "#E06666",
           backgroundColor: "#E06666",
-          borderWidth: 2,
+          borderWidth: 3,
           cubicInterpolationMode: "monotone",
           tension: 0.4,
-          pointRadius: 0,
+          pointRadius: 2,
         },
       ],
     },

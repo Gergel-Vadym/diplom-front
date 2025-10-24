@@ -37,12 +37,13 @@ export default defineNuxtConfig({
           href: "/favicon/site.webmanifest",
         },
       ],
-    }
+    },
+    pageTransition: { name: "page", mode: "out-in" },
   },
 
   css: ["~/assets/scss/common.scss"],
 
-  modules: ["@nuxt/image", "@nuxtjs/google-fonts", "@pinia/nuxt"],
+  modules: ["@nuxt/image", "@nuxtjs/google-fonts", "@pinia/nuxt", "nuxt-swiper",],
   googleFonts: {
     families: {
       Mohave: true,
