@@ -1,0 +1,83 @@
+.swiper {
+  &__wrapper {
+    &-title {
+      font-weight: 600;
+      font-size: 22rem;
+      line-height: 120%;
+      color: var(--black);
+      transition: color 0.2s ease;
+      &-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30rem;
+      }
+    }
+
+    &-btns {
+      display: flex;
+      flex-direction: row;
+      gap: 8rem;
+      position: relative;
+    }
+    .swiper {
+      &-button {
+        padding: 8rem;
+        width: 40rem;
+        height: 40rem;
+        &::after {
+          display: none;
+        }
+        &:hover {
+          .swiper-button-icon {
+            stroke: var(--blue);
+          }
+        }
+        &-prev,
+        &-next {
+          position: static;
+          margin-top: 0rem;
+        }
+        &-icon {
+          width: 24rem;
+          height: 24rem;
+          stroke: var(--black);
+          transition: stroke 0.2s ease;
+        }
+        &-prev {
+          transform: rotate(180deg);
+        }
+      }
+      &-slide {
+        height: auto;
+        .card--blog {
+          width: 100%;
+          height: 100%;
+        }
+        .card--meditation {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+.swiper {
+  &__wrapper {
+    &-noWrapper {
+      .swiper {
+        padding-inline: 100rem;
+        &__wrapper {
+          &-title {
+            font-weight: 600;
+            font-size: 32rem;
+            line-height: 120%;
+            color: var(--black);
+            transition: color 0.2s ease;
+          }
+        }
+      }
+    }
+  }
+}

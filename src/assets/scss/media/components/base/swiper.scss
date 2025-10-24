@@ -1,0 +1,46 @@
+@use "../../../base/variables" as var;
+@media #{var.$tablet} {
+  .swiper {
+    &__wrapper {
+      .swiper__wrapper-btns {
+        display: none;
+      }
+      &-title {
+        &-container {
+          margin-bottom: 15rem;
+        }
+      }
+      &-noWrapper {
+        .swiper {
+          padding-inline: 50rem;
+          &__wrapper {
+            &-title {
+              font-size: 22rem;
+            }
+          }
+          &-slide {
+            height: auto;
+            .card--blog {
+              width: 100%;
+            }
+            .card--meditation {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media #{var.$mobile} {
+  .swiper {
+    &__wrapper {
+      &-noWrapper {
+        .swiper {
+          padding-inline: 20rem;
+        }
+      }
+    }
+  }
+}
