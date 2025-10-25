@@ -78,6 +78,10 @@
       width: 50rem;
       height: 50rem;
       fill: var(--white);
+      transition: fill .3s ease;
+      &:hover{
+        fill: var(--blue);
+      }
     }
   }
 }

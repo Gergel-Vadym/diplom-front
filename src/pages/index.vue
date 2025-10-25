@@ -92,12 +92,13 @@ const card = ref([
   },
 ]);
 
-
 const cardM = ref([
   {
     img: "./images/meditation/meditation1.jpg",
-    title: "testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test ",
-    subtitle: "test test test test test testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test",
+    title:
+      "testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test ",
+    subtitle:
+      "test test test test test testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test",
     link: "/meditation/1",
   },
   {
@@ -156,27 +157,135 @@ const cardM = ref([
   },
 ]);
 
+const counter = ref([
+  {
+    name: "Користувачів",
+    value: 110,
+    img: "./images/users.png",
+  },
+  {
+    name: "Років на ринку",
+    value: 3,
+    img: "./images/time.png",
+  },
+  {
+    name: "Публікацій у блозі",
+    value: 20,
+    img: "./images/blog.png",
+  },
+]);
 
+const counterSection = ref(null);
 
+//metods
+
+const animateCounts = () => {
+  counter.value.forEach((item) => {
+    item.current = 0;
+
+    const end = item.value;
+    const duration = 3000;
+    const stepTime = Math.max(Math.floor(duration / end), 20);
+
+    const timer = setInterval(() => {
+      item.current++;
+      if (item.current >= end) {
+        item.current = end;
+        clearInterval(timer);
+      }
+    }, stepTime);
+  });
+};
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[0];
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.2) {
+        animateCounts();
+        observer.unobserve(entry.target);
+      }
+    },
+    {
+      threshold: [0.3],
+    }
+  );
+
+  if (counterSection.value) {
+    observer.observe(counterSection.value);
+  }
+});
 </script>
 
 <template>
   <main class="main">
-    <BaseSwiper :cardContents="card" noContainer>
-      <slot>
-        <span class="swiper__wrapper-title"> Статті </span>
-      </slot>
-      <template #slide="{ item }">
-        <CardBlog :data="item" />
-      </template>
-    </BaseSwiper>
-    <BaseSwiper :cardContents="cardM" noContainer>
-      <slot>
-        <span class="swiper__wrapper-title"> Медитації </span>
-      </slot>
-      <template #slide="{ item }">
-        <CardMeditation :data="item" />
-      </template>
-    </BaseSwiper>
+    <div class="home">
+      <div class="container">
+        <section ref="counterSection" class="home__counter-wrapper">
+          <h2 class="home__counter-title">Технології для гармонійного життя</h2>
+          <div class="home__counter-subtitle">
+            Ми створюємо цифровий простір, який допомагає краще розуміти себе,
+            піклуватися про ментальне здоров’я та знаходити внутрішній баланс.
+          </div>
+
+          <div class="home__counter-block">
+            <template
+              v-for="(item, index) in counter"
+              :key="`home-counter-${index}`"
+            >
+              <div v-if="item.name && item.value" class="home__counter">
+                <NuxtImg
+                  :src="item.img"
+                  :alt="item.name"
+                  width="40"
+                  height="40"
+                  class="home__counter-img"
+                />
+                <div class="home__counter-info">
+                  <div class="home__counter-count">
+                    <span class="home__counter-value">
+                      {{ item.current }}
+                    </span>
+                    <span> + </span>
+                  </div>
+                  <span class="home__counter-name">{{ item.name }}</span>
+                </div>
+              </div>
+              <div
+                v-if="index !== counter.length - 1"
+                class="home__counter-line"
+              ></div>
+            </template>
+          </div>
+        </section>
+      </div>
+
+      <BaseSwiper :cardContents="card" noContainer titleCenter btnAbs>
+        <slot>
+          <span class="swiper__wrapper-title">
+            Перегляньте наш блог, щоб знати більше про медитацію, сон, стрес та
+            психічне здоров'я.
+          </span>
+        </slot>
+        <template #slide="{ item }">
+          <CardBlog :data="item" />
+        </template>
+      </BaseSwiper>
+      <BaseSwiper
+        :cardContents="cardM"
+        noContainer
+        :breakpoints="{
+          768: { slidesPerView: 2, spaceBetween: 20 },
+          1024: { slidesPerView: 4, spaceBetween: 20 },
+        }"
+      >
+        <slot>
+          <span class="swiper__wrapper-title"> Медитації </span>
+        </slot>
+        <template #slide="{ item }">
+          <CardMeditation :data="item" />
+        </template>
+      </BaseSwiper>
+    </div>
   </main>
 </template>

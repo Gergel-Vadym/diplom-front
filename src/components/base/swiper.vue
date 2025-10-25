@@ -14,6 +14,27 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  titleCenter: {
+    type: Boolean,
+    default: false,
+  },
+  btnAbs: {
+    type: Boolean,
+    default: false,
+  },
+  breakpoints: {
+    type: Object,
+    default: () => ({
+      768: {
+        slidesPerView: 1,
+        spaceBetween: 20,
+      },
+      1024: {
+        slidesPerView: 3,
+        spaceBetween: 20,
+      },
+    }),
+  },
 });
 
 //variables
@@ -27,12 +48,18 @@ const btnId = useId();
   >
     <div
       class="swiper__wrapper-title-container"
-      :class="{ container: noContainer }"
+      :class="[
+        {
+          container: noContainer,
+          'swiper__wrapper-title--center': titleCenter,
+        },
+      ]"
     >
       <slot />
       <div
-        v-if="!showBtns || cardContents.length > 3"
+        v-if="!showBtns"
         class="swiper__wrapper-btns"
+        :class="[{'swiper__wrapper-btns--absolute' : btnAbs}]"
       >
         <button
           :class="`swiper-button-prev swiper-button-prev-${btnId} swiper-button`"
@@ -66,16 +93,7 @@ const btnId = useId();
         }"
         :space-between="10"
         :slides-per-view="1"
-        :breakpoints="{
-          768: {
-            slidesPerView: 1,
-            spaceBetween: 20,
-          },
-          1024: {
-            slidesPerView: 3,
-            spaceBetween: 20,
-          },
-        }"
+        :breakpoints="breakpoints"
       >
         <SwiperSlide
           class="swiper-slide"

@@ -1,10 +1,35 @@
 @use "../../base/variables" as var;
 @media #{var.$laptop} {
-
 }
 @media #{var.$tablet} {
+  .home {
+    &__counter {
+      padding: 0rem;
+      max-width: 160rem;
+      gap: 10rem;
 
+      &-wrapper {
+        padding: 30rem;
+        gap: 15rem;
+      }
+    }
+  }
 }
 @media #{var.$mobile} {
-
+  .home {
+    &__counter {
+      &-wrapper {
+        padding: 20rem;
+        gap: 10rem;
+      }
+      &-line {
+        display: none;
+      }
+      &-block {
+        gap: 10rem;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
 }
