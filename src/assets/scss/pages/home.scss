@@ -69,4 +69,8 @@
       text-align: center;
     }
   }
+  &__hero{
+    display: flex;
+    flex-direction: column;
+  }
 }

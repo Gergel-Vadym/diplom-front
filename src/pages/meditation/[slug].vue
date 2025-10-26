@@ -1,5 +1,4 @@
 <script setup>
-
 const route = useRoute();
 
 const breadcrumbs = ref([
@@ -20,18 +19,20 @@ const breadcrumbs = ref([
 <template>
   <main class="main">
     <div class="container">
-      <div class="meditation">
+      <section class="meditation">
         <BaseBreadcrumbs :links="breadcrumbs" />
 
         <div class="meditation__video-wrapper">
-          <!-- <video src="" class="meditation__video"></video> -->
-
-          <NuxtImg
-            src="./images/meditation/meditation1.jpg"
+          <video
+            src="../../public/video/video.mp4"
             class="meditation__video"
             width="1720"
-            height="900"
-          />
+            height="700"
+            controls
+            autoplay
+            muted
+            loop
+          ></video>
         </div>
         <div class="meditation__wrapper">
           <h1 class="meditation__title">test</h1>
@@ -42,7 +43,7 @@ const breadcrumbs = ref([
             quas iste. Consequuntur, saepe quidem.
           </div>
         </div>
-      </div>
+      </section>
     </div>
   </main>
 </template>

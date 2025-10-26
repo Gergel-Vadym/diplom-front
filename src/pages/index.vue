@@ -176,6 +176,20 @@ const counter = ref([
 ]);
 
 const counterSection = ref(null);
+const slide = ref([
+  {
+    id: 1,
+    img: "./images/blog/blog1.jpg",
+    active: true,
+  },
+  {
+    id: 2,
+    img: "./images/blog/blog2.jpg",
+    active: false,
+  },
+]);
+
+let intervalId;
 
 //metods
 
@@ -197,7 +211,18 @@ const animateCounts = () => {
   });
 };
 
+function changeActiveSlide() {
+  const activeIndex = slide.value.findIndex((slide) => slide.active);
+  slide.value[activeIndex].active = false;
+
+  const nextIndex = (activeIndex + 1) % slide.value.length;
+  slide.value[nextIndex].active = true;
+}
+
+onMounted(() => {});
+
 onMounted(() => {
+  intervalId = setInterval(changeActiveSlide, 5000);
   const observer = new IntersectionObserver(
     (entries) => {
       const entry = entries[0];
@@ -215,11 +240,48 @@ onMounted(() => {
     observer.observe(counterSection.value);
   }
 });
+
+onBeforeUnmount(() => {
+  clearInterval(intervalId);
+});
 </script>
 
 <template>
   <main class="main">
     <div class="home">
+      <section class="home__hero container">
+        <div class="home__hero-wrapper">
+          <h1 class="home__hero-title">
+            Ми піклуємося про ментальне здоров’я та допомагаємо знайти гармонію
+            кожного дня.
+          </h1>
+          <div class="home__hero-img__wrapper">
+            <NuxtImg
+              v-for="(item, index) in slide"
+              :key="`home__hero-slide-${index}`"
+              class="home__hero-img"
+              :src="item.img"
+              :alt="`home-promo-img-${index}`"
+              width="830"
+              height="550"
+              :class="{ active: item.active }"
+            />
+          </div>
+        </div>
+      </section>
+
+      <BaseSwiper :cardContents="card" noContainer titleCenter btnAbs>
+        <slot>
+          <span class="swiper__wrapper-title">
+            Перегляньте наш блог, щоб знати більше про медитацію, сон, стрес та
+            ментальне здоров'я.
+          </span>
+        </slot>
+        <template #slide="{ item }">
+          <CardBlog :data="item" />
+        </template>
+      </BaseSwiper>
+
       <div class="container">
         <section ref="counterSection" class="home__counter-wrapper">
           <h2 class="home__counter-title">Технології для гармонійного життя</h2>
@@ -260,17 +322,6 @@ onMounted(() => {
         </section>
       </div>
 
-      <BaseSwiper :cardContents="card" noContainer titleCenter btnAbs>
-        <slot>
-          <span class="swiper__wrapper-title">
-            Перегляньте наш блог, щоб знати більше про медитацію, сон, стрес та
-            психічне здоров'я.
-          </span>
-        </slot>
-        <template #slide="{ item }">
-          <CardBlog :data="item" />
-        </template>
-      </BaseSwiper>
       <BaseSwiper
         :cardContents="cardM"
         noContainer
