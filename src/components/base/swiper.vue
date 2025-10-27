@@ -22,6 +22,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  link:{
+    type:String,
+    default:"",
+  },
   breakpoints: {
     type: Object,
     default: () => ({
@@ -56,31 +60,36 @@ const btnId = useId();
       ]"
     >
       <slot />
-      <div
-        v-if="!showBtns"
-        class="swiper__wrapper-btns"
-        :class="[{'swiper__wrapper-btns--absolute' : btnAbs}]"
-      >
-        <button
-          :class="`swiper-button-prev swiper-button-prev-${btnId} swiper-button`"
+      <div class="swiper__btns-wrapper">
+        <NuxtLink :to="link" class="btn">
+          Дивитись всі
+        </NuxtLink>
+        <div
+          v-if="!showBtns"
+          class="swiper__wrapper-btns"
+          :class="[{'swiper__wrapper-btns--absolute' : btnAbs}]"
         >
-          <BaseIconSvg
-            iconName="chevron"
-            width="24"
-            height="24"
-            customClass="swiper-button-icon"
-          />
-        </button>
-        <button
-          :class="`swiper-button-next swiper-button-next-${btnId} swiper-button`"
-        >
-          <BaseIconSvg
-            iconName="chevron"
-            width="24"
-            height="24"
-            customClass="swiper-button-icon"
-          />
-        </button>
+          <button
+            :class="`swiper-button-prev swiper-button-prev-${btnId} swiper-button`"
+          >
+            <BaseIconSvg
+              iconName="chevron"
+              width="24"
+              height="24"
+              customClass="swiper-button-icon"
+            />
+          </button>
+          <button
+            :class="`swiper-button-next swiper-button-next-${btnId} swiper-button`"
+          >
+            <BaseIconSvg
+              iconName="chevron"
+              width="24"
+              height="24"
+              customClass="swiper-button-icon"
+            />
+          </button>
+        </div>
       </div>
     </div>
     <ClientOnly>
