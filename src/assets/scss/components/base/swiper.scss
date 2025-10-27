@@ -92,4 +92,10 @@
       }
     }
   }
+  &__btns-wrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 10rem;
+    align-items: center;
+  }
 }

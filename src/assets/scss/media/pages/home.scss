@@ -3,6 +3,7 @@
 }
 @media #{var.$tablet} {
   .home {
+    gap: 60rem;
     &__counter {
       padding: 0rem;
       max-width: 160rem;
@@ -13,22 +14,81 @@
         gap: 15rem;
       }
     }
+    &__hero {
+      position: relative;
+      &-title {
+        position: absolute;
+        z-index: 1;
+        max-width: 600rem;
+        width: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 50rem;
+        background-color: rgba(255, 255, 255, 0.6);
+      }
+      &-img {
+        &__wrapper {
+          width: 668rem;
+        }
+      }
+    }
+    &__help {
+      &-card {
+        display: flex;
+        flex-direction: column;
+        width: calc((100% - 40rem) / 3);
+        &__wrapper {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20rem;
+        }
+      }
+    }
   }
 }
 @media #{var.$mobile} {
   .home {
+    gap: 40rem;
     &__counter {
       &-wrapper {
         padding: 20rem;
         gap: 10rem;
       }
-      &-line {
-        display: none;
-      }
       &-block {
         gap: 10rem;
         align-items: center;
         justify-content: center;
+      }
+    }
+    &__hero {
+      &-title {
+        max-width: 300rem;
+        font-size: 22rem;
+        bottom: 20rem;
+      }
+      &-img {
+        &__wrapper {
+          width: 320rem;
+          height: 300rem;
+        }
+      }
+    }
+    &__help {
+      &-card {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        &__wrapper {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20rem;
+          align-items: center;
+          justify-content: center;
+        }
+        &__subtitle{
+          text-align: center;
+        }
       }
     }
   }
