@@ -10,7 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "engines": {
-    "node": "^20.18.3"
+    "node": "^20.19.5"
   },
   "devDependencies": {
     "@nuxtjs/google-fonts": "^3.2.0",
