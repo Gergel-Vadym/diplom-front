@@ -46,10 +46,7 @@ function handleFocus(e) {
     : false;
   emit("input:focus");
 }
-function handleBlur(e) {
-  e.target.value = props.modelValue;
-  emit("input:blur");
-}
+
 
 function handleInput(e) {
   emit("update:modelValue", e.target.value);
@@ -92,7 +89,6 @@ function toggleInputType() {
         :class="classInp"
         @input="handleInput"
         @focus="handleFocus"
-        @blur="handleBlur"
       />
         <div
           class="input__icon"

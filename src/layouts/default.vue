@@ -4,6 +4,7 @@ import { useModalStore } from "~/store/modal";
 
 // variables
 const modalStore = useModalStore();
+// await $fetch('/');
 </script>
 <template>
   <div class="wrapper">

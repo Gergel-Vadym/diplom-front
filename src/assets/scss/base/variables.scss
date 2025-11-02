@@ -10,6 +10,7 @@
   --font-mohave-bold-30: normal 700 30rem/130% "Mohave", sans-serif;
   --font-mohave-bold-20: normal 700 20rem/130% "Mohave", sans-serif;
   --font-mohave-bold-50: normal 700 50rem/130% "Mohave", sans-serif;
+  --font-mohave-bold-150: normal 700 150rem/130% "Mohave", sans-serif;
 
   //color
   --grey: #ced2da;
@@ -26,6 +27,9 @@
   --blue-1: #8cb9bc;
   --blue-2: #4e7073;
   --blue-3: #6280c2;
+  --red: #ff0000;
+  --green-1: #c1cfa1;
+  --green-2: #284e32;
 }
 
 //media screen size
@@ -70,6 +74,6 @@ $laptop: "screen and (max-width: 1439px)";
     }
   }
   &::-webkit-scrollbar-button {
-  display: none;
-}
+    display: none;
+  }
 }

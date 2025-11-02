@@ -2,8 +2,12 @@
 // props
 const props = defineProps({
   cropHeight: {
-    type: Number,
+    type: [Number, String],
     default: 100, //rem
+  },
+  breakpoints: {
+    type: Array,
+    default: [],
   },
   icon: {
     type: String,
@@ -20,7 +24,7 @@ const isOpen = ref(false);
 const toggleReadMore = () => {
   isOpen.value = !isOpen.value;
   contentRef.value.style.height = isOpen.value
-    ? `${fullHeight.value}rem`
+    ? `${pixelToRem(fullHeight.value)}rem`
     : `${props.cropHeight}rem`;
 };
 
@@ -38,7 +42,9 @@ onMounted(() => {
     </div>
     <button class="read-more__button" @click="toggleReadMore">
       <div class="show-more-button">
-        <span class="show-more-button__title">{{ isOpen ? "Згорнути" : "Показати"}}</span>
+        <span class="show-more-button__title">{{
+          isOpen ? "Згорнути" : "Показати"
+        }}</span>
       </div>
       <BaseIconSvg iconName="chevron" customClass="read-more__icon" />
     </button>
