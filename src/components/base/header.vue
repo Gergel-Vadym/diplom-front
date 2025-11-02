@@ -18,7 +18,7 @@ const nav = ref([
     link: "/blog",
   },
 ]);
-// const access_token = useCookie("access_token");
+const access_token = useCookie("access_token");
 </script>
 
 <template>
@@ -43,10 +43,10 @@ const nav = ref([
             </ul>
           </nav>
           <div class="header__user-wrapper">
-            <!-- <NuxtLink class="header__user" to="/profile">
-              <BaseIconSvg iconName="user" width="24" height="24" customClass="header__user-icon"/>
-            </NuxtLink>  -->
-             <button @click="modalStore.toggleModal('login')" class="header__user">
+            <NuxtLink v-show="access_token" class="header__user" to="/profile">
+              <BaseIconSvg iconName="user" width="24" height="24" customClass="header__user-icon header__user-icon--login"/>
+            </NuxtLink> 
+             <button v-show="!access_token" @click="modalStore.toggleModal('login')" class="header__user">
               <BaseIconSvg iconName="user" width="24" height="24" customClass="header__user-icon" />
             </button>
           </div>

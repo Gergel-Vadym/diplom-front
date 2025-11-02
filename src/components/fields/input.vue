@@ -49,11 +49,6 @@ function handleFocus(e) {
     : false;
   emit("input:focus");
 }
-function handleBlur(e) {
-  e.target.value = props.modelValue;
-  emit("input:blur");
-}
-
 function handleInput(e) {
   emit("update:modelValue", e.target.value);
 }
@@ -66,6 +61,10 @@ const {
   meta,
 } = useField(name, undefined, {
   initialValue: props.modelValue,
+});
+
+watch(inputValue, (val) => {
+  emit("update:modelValue", val);
 });
 </script>
 
@@ -82,25 +81,16 @@ const {
     >
     <div class="input__wrapper">
       <input
+        v-model="inputValue"
         :name="name"
         :id="name"
         :type="type"
         :placeholder="placeholder"
-        :value="modelValue"
         v-maska:[optionsMask]
         :class="classInp"
         @input="handleInput"
         @focus="handleFocus"
-        @blur="handleBlur"
       />
-      <div class="input__icon" v-if="iconName">
-        <BaseIconSvg :icon-name="iconName" width="18rem" height="17rem" />
-      </div>
-    </div>
-    <div v-if="errorMessage" class="errors">
-      <p>
-        {{ errorMessage }}
-      </p>
     </div>
     <div v-if="errorMessage" class="errors">
       <p>

@@ -1,9 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
+    runtimeConfig: {
+    public: {
+      API_BASE_URL: process.env.API_URL || "",
+      APP_DOMAIN: process.env.NUXT_APP_DOMAIN || "",
+    },
+  },
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
-  ssr: true,
   srcDir: "src/",
   alias: {
     "@": "src/",

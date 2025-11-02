@@ -1,0 +1,14 @@
+.error{
+  display: flex;
+  flex-direction: column;
+  gap: 20rem;
+  align-items: center;
+  justify-content: center;
+  margin-block: 100rem;
+  &__title{
+    font: var(--font-mohave-bold-150);
+  }
+  &__subtitle{
+    font: var(--font-mohave-bold-30);
+  }
+}

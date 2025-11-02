@@ -157,86 +157,54 @@ const cardM = ref([
   },
 ]);
 
-const counter = ref([
+const checkboxesReadmoreBreakPoints = [
   {
-    name: "Користувачів",
-    value: 110,
-    img: "./images/users.png",
+    screen: 1024,
+    cropHeight: 240,
   },
-  {
-    name: "Років на ринку",
-    value: 3,
-    img: "./images/stongs.png",
-  },
-  {
-    name: "Публікацій у блозі",
-    value: 20,
-    img: "./images/blog.png",
-  },
-  {
-    name: "Годин медитації",
-    value: 500,
-    img: "./images/time.png",
-  },
-]);
+];
 
 const counterSection = ref(null);
-const slide = ref([
-  {
-    id: 1,
-    img: "./images/blog/blog1.jpg",
-    active: true,
-  },
-  {
-    id: 2,
-    img: "./images/blog/blog2.jpg",
-    active: false,
-  },
-]);
-
-const cardHelp = ref([
-  {
-    title: "Менше стресу.",
-    subtitle:
-      "Отримайте миттєве полегшення від стресу та тривоги, щоб ви могли повернутися до життя.",
-    icon: "./images/strees.png",
-  },
-  {
-    title: "Більше спати.",
-    subtitle: "Засинайте (і спіть) природно та спокійно.",
-    icon: "./images/sleep.png",
-  },
-  {
-    title: "Живи з розумом.",
-    subtitle:
-      "Долайте життєві злети та падіння зі стійкістю, впевненістю та спрямованою підтримкою.",
-    icon: "./images/live.png",
-  },
-]);
 
 let intervalId;
 
+//api
+const { data: page } = await useAsyncData(
+  `home`,
+  () =>
+    $fetch(`/pages/home`, {
+      ...defaultOptions(),
+    }),
+  {
+    transform: (page) => {
+      let blocksObj = {};
+      page.blocks.forEach((el) => {
+        blocksObj[el.type] = el;
+      });
+
+      return { ...blocksObj, data: page.data };
+    },
+  }
+);
+
+console.log(page.value);
+
 //metods
+// --- SLIDES ---
+const slide = ref([]);
 
-const animateCounts = () => {
-  counter.value.forEach((item) => {
-    item.current = 0;
-
-    const end = item.value;
-    const duration = 3000;
-    const stepTime = Math.max(Math.floor(duration / end));
-
-    const timer = setInterval(() => {
-      item.current++;
-      if (item.current >= end) {
-        item.current = end;
-        clearInterval(timer);
-      }
-    }, stepTime);
-  });
-};
+function initSlides() {
+  if (page.value?.hero?.data?.items?.length) {
+    slide.value = page.value.hero.data.items.map((item, index) => ({
+      ...item,
+      active: index === 0,
+    }));
+  }
+}
 
 function changeActiveSlide() {
+  if (!slide.value.length) return;
+
   const activeIndex = slide.value.findIndex((slide) => slide.active);
   slide.value[activeIndex].active = false;
 
@@ -244,10 +212,50 @@ function changeActiveSlide() {
   slide.value[nextIndex].active = true;
 }
 
-onMounted(() => {});
 
+// --- COUNTER ---
+const counter = ref([]);
+
+function initCounter() {
+  if (page.value?.harmony_tech?.data?.items?.length) {
+    counter.value = page.value.harmony_tech.data.items.map((item) => ({
+      ...item,
+      current: 0,
+    }));
+  }
+}
+
+const animateCounts = () => {
+  if (!counter.value.length) return;
+
+  const duration = 4000;
+  const startTime = performance.now();
+
+  const update = (currentTime) => {
+    const progress = Math.min((currentTime - startTime) / duration, 1);
+
+    counter.value.forEach((item) => {
+      const end = item.count;
+      item.current = Math.floor(end * progress);
+    });
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      counter.value.forEach((item) => (item.current = item.count));
+    }
+  };
+
+  requestAnimationFrame(update);
+};
+
+// --- LIFECYCLE ---
 onMounted(() => {
+  initSlides();
+  initCounter();
+
   intervalId = setInterval(changeActiveSlide, 5000);
+
   const observer = new IntersectionObserver(
     (entries) => {
       const entry = entries[0];
@@ -256,9 +264,7 @@ onMounted(() => {
         observer.unobserve(entry.target);
       }
     },
-    {
-      threshold: [0.3],
-    }
+    { threshold: [0.3] }
   );
 
   if (counterSection.value) {
@@ -269,24 +275,16 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearInterval(intervalId);
 });
-
-const checkboxesReadmoreBreakPoints = [
-  {
-    screen: 1024,
-    cropHeight: 240,
-  },
-];
 </script>
 
 <template>
   <main class="main">
     <div class="home">
-      <section class="home__hero container">
-        <h1 class="home__hero-title">
-          Ми піклуємося про ментальне здоров’я та допомагаємо знайти гармонію
-          кожного дня.
-        </h1>
-        <div class="home__hero-img__wrapper">
+      <div v-if="page?.hero?.data" class="home__hero container">
+        <div v-if="page?.hero?.data?.title" class="home__hero-title">
+          {{ page.hero.data.title || "" }}
+        </div>
+        <div v-if="slide" class="home__hero-img__wrapper">
           <NuxtImg
             v-for="(item, index) in slide"
             :key="`home__hero-slide-${index}`"
@@ -298,30 +296,33 @@ const checkboxesReadmoreBreakPoints = [
             :class="{ active: item.active }"
           />
         </div>
-      </section>
+      </div>
 
-      <div class="container">
+      <div v-if="page?.support_section?.data" class="container">
         <section class="home__help">
-          <h2 class="home__help-title">
-            Ми тут, щоб допомогти вам почуватися краще.
-          </h2>
-          <div class="home__help-card__wrapper">
+          <div v-if="page?.support_section?.data?.title" class="home__help-title">
+            {{ page.support_section.data.title || "" }}
+          </div>
+          <div
+            v-if="page?.support_section?.data?.items.length > 0"
+            class="home__help-card__wrapper"
+          >
             <div
-              v-for="(item, index) in cardHelp"
+              v-for="(item, index) in page.support_section.data.items"
               :key="`home-card-help-${index}`"
               class="home__help-card"
             >
               <NuxtImg
-                :src="item.icon"
+                :src="item.img"
                 :alt="item.title"
                 width="56"
                 height="56"
                 class="home__help-card__img"
               />
-              <div class="home__help-card__title">
+              <div v-if="item?.title" class="home__help-card__title">
                 {{ item.title || "" }}
               </div>
-              <div class="home__help-card__subtitle">
+              <div v-if="item?.subtitle" class="home__help-card__subtitle">
                 {{ item.subtitle || "" }}
               </div>
             </div>
@@ -338,12 +339,13 @@ const checkboxesReadmoreBreakPoints = [
         </template>
       </BaseSwiper>
 
-      <div class="container">
+      <div v-if="page?.harmony_tech?.data" class="container">
         <section ref="counterSection" class="home__counter-wrapper">
-          <h2 class="home__counter-title">Технології для гармонійного життя</h2>
-          <div class="home__counter-subtitle">
-            Ми створюємо цифровий простір, який допомагає краще розуміти себе,
-            піклуватися про ментальне здоров’я та знаходити внутрішній баланс.
+          <div v-if="page?.harmony_tech?.data?.title" class="home__counter-title">
+            {{ page.harmony_tech.data.title || "" }}
+          </div>
+          <div v-if="page?.harmony_tech?.data?.subtitle" class="home__counter-subtitle">
+            {{ page.harmony_tech.data.subtitle || "" }}
           </div>
 
           <div class="home__counter-block">
@@ -351,10 +353,10 @@ const checkboxesReadmoreBreakPoints = [
               v-for="(item, index) in counter"
               :key="`home-counter-${index}`"
             >
-              <div v-if="item.name && item.value" class="home__counter">
+              <div v-if="item?.desc && item?.count" class="home__counter">
                 <NuxtImg
                   :src="item.img"
-                  :alt="item.name"
+                  :alt="item.title"
                   width="40"
                   height="40"
                   class="home__counter-img"
@@ -366,7 +368,7 @@ const checkboxesReadmoreBreakPoints = [
                     </span>
                     <span> + </span>
                   </div>
-                  <span class="home__counter-name">{{ item.name }}</span>
+                  <span class="home__counter-name">{{ item.desc }}</span>
                 </div>
               </div>
             </template>
@@ -391,7 +393,7 @@ const checkboxesReadmoreBreakPoints = [
         </template>
       </BaseSwiper>
 
-      <div class="read-more-section">
+      <div v-if="page?.data?.body" class="read-more-section">
         <div class="container">
           <ReadMore
             customClass="catalog-filter__read-more"
@@ -399,71 +401,7 @@ const checkboxesReadmoreBreakPoints = [
             :breakpoints="checkboxesReadmoreBreakPoints"
           >
             <template #body>
-              <div class="typography">
-            <h1>Медитація: гармонія розуму та тіла</h1>
-            <p>
-              Медитація — це практика самопізнання, що допомагає зосередитися на
-              теперішньому моменті, заспокоїти розум і тіло. Вона здобула
-              популярність завдяки своїй здатності зменшувати напруження,
-              покращувати настрій і сприяти внутрішній рівновазі.
-            </p>
-            <p>
-              Якщо ви тільки починаєте, оберіть просту техніку. Сядьте зручно,
-              закрийте очі, спостерігайте за диханням і дозвольте думкам вільно
-              проходити, не оцінюючи їх.
-            </p>
-
-            <h2>Суть медитації</h2>
-            <p>
-              Медитація — давня духовна практика, що бере свій початок у східних
-              традиціях. Вона поєднує дихальні вправи, спостереження,
-              концентрацію та усвідомлення для досягнення внутрішнього спокою й
-              гармонії.
-            </p>
-
-            <h3>Навіщо медитувати?</h3>
-            <p>
-              Регулярна медитація допомагає розвинути
-              <strong>уважність</strong> і <b>внутрішню стійкість</b> у
-              щоденному житті. Наукові дослідження доводять, що
-              <strong>свідоме тренування розуму</strong> позитивно впливає на
-              фізичне та емоційне здоров’я.
-            </p>
-
-            <p>
-              <em>
-                Крім того, медитація зменшує тривожність, покращує концентрацію,
-                допомагає краще справлятися зі стресом і відновлює емоційну
-                рівновагу.
-              </em>
-            </p>
-
-            <h4>Популярні види медитації</h4>
-            <p>Існує багато способів медитувати. Ось кілька найпоширеніших:</p>
-            <ol>
-              <li>Медитація на диханні</li>
-              <li>Медитація з повторенням мантри</li>
-              <li>Рухома медитація (наприклад, йога або тай-чи)</li>
-              <li>Медитація уяви (візуалізація)</li>
-              <li>Медитація з відкритими очима</li>
-            </ol>
-
-            <h5>Позитивний вплив на організм</h5>
-            <ul>
-              <li>Зменшення стресу та напруги</li>
-              <li>Покращення концентрації</li>
-              <li>Підвищення емоційної стабільності</li>
-              <li>Глибше усвідомлення себе</li>
-            </ul>
-
-            <h6>Як почати практику?</h6>
-            <p>
-              Почніть із коротких сеансів по 5–10 хвилин на день. Знайдіть
-              спокійне місце, сядьте зручно та спостерігайте за своїм диханням.
-              З часом ви навчитеся легше зосереджуватись і відчувати більше
-              спокою.
-            </p>
-              </div>
+              <div class="typography" v-html="page.data.body"></div>
             </template>
           </ReadMore>
         </div>

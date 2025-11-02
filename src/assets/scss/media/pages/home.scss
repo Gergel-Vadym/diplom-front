@@ -1,5 +1,15 @@
 @use "../../base/variables" as var;
 @media #{var.$laptop} {
+  .home{
+    &__hero{
+      &-img{
+        &__wrapper{
+          width: 600rem;
+          height: 500rem;
+        }
+      }
+    }
+  }
 }
 @media #{var.$tablet} {
   .home {
