@@ -11,10 +11,10 @@ console.log(profileInfo.value);
 
 //variables
 const form = ref({
-  name: profileInfo?.data?.name || "",
-  lastname: profileInfo?.data?.lastname || "",
-  email: profileInfo?.data?.email || "",
-  phone: profileInfo?.data?.phone || "",
+  name: profileInfo?.value?.data?.name || "",
+  lastname: profileInfo?.value?.data?.lastname || "",
+  email: profileInfo?.value?.data?.email || "",
+  phone: profileInfo?.value?.data?.phone || "",
 });
 const loader = ref(false);
 
@@ -52,21 +52,6 @@ const onSubmit = async (val, action) => {
     loader.value = false;
   }
 };
-
-watch(
-  profileInfo,
-  (newVal) => {
-    if (newVal?.data) {
-      form.value = {
-        name: newVal.data.name || "",
-        lastname: newVal.data.lastname || "",
-        email: newVal.data.email || "",
-        phone: newVal.data.phone || "",
-      };
-    }
-  },
-  { immediate: true }
-);
 </script>
 
 <template>

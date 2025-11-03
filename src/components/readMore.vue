@@ -24,13 +24,14 @@ const isOpen = ref(false);
 const toggleReadMore = () => {
   isOpen.value = !isOpen.value;
   contentRef.value.style.height = isOpen.value
-    ? `${pixelToRem(fullHeight.value)}rem`
+    ? `${fullHeight.value}px`
     : `${props.cropHeight}rem`;
 };
 
 onMounted(() => {
   document.fonts.ready.then(() => {
     fullHeight.value = contentRef.value.offsetHeight;
+    console.log(fullHeight.value)
     contentRef.value.style.height = `${props.cropHeight}rem`;
   });
 });
