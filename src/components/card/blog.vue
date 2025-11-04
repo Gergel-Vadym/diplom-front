@@ -5,17 +5,17 @@ const props = defineProps({
 });
 </script>
 <template>
-  <NuxtLink :to="data.link" class="card card--blog">
+  <NuxtLink :to="`/blog/${data.slug}`" class="card card--blog">
     <div class="card__img-wrapper">
-      <NuxtImg :src="data.img" :alt="data.title" class="card__img" width="200" height="200" />
+      <NuxtImg :src="data.image.url" :alt="data.image.name" class="card__img" width="200" height="200" />
     </div>
     <div class="card__info">
       <div class="card__wrapper">
         <div class="card__autor">Breez</div>
-        <div class="card__readtime">~ {{ data.readTime || 5 }} хв.</div>
+        <div class="card__readtime">~ {{ data.duration }} хв.</div>
       </div>
-      <div class="card__title">{{ data.title || "" }}</div>
-      <div class="card__subtitle">{{ data.subtitle || "" }}</div>
+      <div class="card__title">{{ data.name || "" }}</div>
+      <div class="card__subtitle">{{ data.teaser || "" }}</div>
     </div>
   </NuxtLink>
 </template>

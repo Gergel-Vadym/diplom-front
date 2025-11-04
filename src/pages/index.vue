@@ -1,162 +1,5 @@
 <script setup>
-const card = ref([
-  {
-    img: "./images/blog/blog1.jpg",
-    title:
-      "testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test ",
-    subtitle:
-      "test test test test test testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test",
-    link: "/blog/1",
-    readTime: 7,
-  },
-  {
-    img: "./images/blog/blog2.jpg",
-    title:
-      "testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test ",
-    subtitle:
-      "test test test test test testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test",
-    link: "/blog/1",
-    readTime: 12,
-  },
-  {
-    img: "./images/blog/blog3.jpg",
-    title:
-      "testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test ",
-    subtitle:
-      "test test test test test testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test",
-    link: "/blog/1",
-    readTime: 18,
-  },
-  {
-    img: "./images/blog/blog4.jpg",
-    title:
-      "testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test ",
-    subtitle:
-      "test test test test test testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test",
-    link: "/blog/1",
-    readTime: 5,
-  },
-  {
-    img: "./images/blog/blog5.jpg",
-    title:
-      "testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test ",
-    subtitle:
-      "test test test test test testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test",
-    link: "/blog/1",
-    readTime: 6,
-  },
-  {
-    img: "./images/blog/blog6.jpg",
-    title:
-      "testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test ",
-    subtitle:
-      "test test test test test testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test",
-    link: "/blog/1",
-    readTime: 9,
-  },
-  {
-    img: "./images/blog/blog7.jpg",
-    title:
-      "testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test ",
-    subtitle:
-      "test test test test test testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test",
-    link: "/blog/1",
-    readTime: 3,
-  },
-  {
-    img: "./images/blog/blog8.jpg",
-    title:
-      "testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test ",
-    subtitle:
-      "test test test test test testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test",
-    link: "/blog/1",
-    readTime: 14,
-  },
-  {
-    img: "./images/blog/blog9.jpg",
-    title:
-      "testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test ",
-    subtitle:
-      "test test test test test testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test",
-    link: "/blog/1",
-    readTime: 6,
-  },
-  {
-    img: "./images/blog/blog10.jpg",
-    title:
-      "testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test ",
-    subtitle:
-      "test test test test test testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test",
-    link: "/blog/1",
-    readTime: 17,
-  },
-]);
-
-const cardM = ref([
-  {
-    img: "./images/meditation/meditation1.jpg",
-    title:
-      "testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test ",
-    subtitle:
-      "test test test test test testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation2.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation3.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation4.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation5.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation6.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation7.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation8.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation9.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation10.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-]);
-
+//variables
 const checkboxesReadmoreBreakPoints = [
   {
     screen: 1024,
@@ -187,7 +30,6 @@ const { data: page } = await useAsyncData(
   }
 );
 
-console.log(page.value);
 
 //metods
 // --- SLIDES ---
@@ -211,7 +53,6 @@ function changeActiveSlide() {
   const nextIndex = (activeIndex + 1) % slide.value.length;
   slide.value[nextIndex].active = true;
 }
-
 
 // --- COUNTER ---
 const counter = ref([]);
@@ -300,7 +141,10 @@ onBeforeUnmount(() => {
 
       <div v-if="page?.support_section?.data" class="container">
         <section class="home__help">
-          <div v-if="page?.support_section?.data?.title" class="home__help-title">
+          <div
+            v-if="page?.support_section?.data?.title"
+            class="home__help-title"
+          >
             {{ page.support_section.data.title || "" }}
           </div>
           <div
@@ -330,9 +174,16 @@ onBeforeUnmount(() => {
         </section>
       </div>
 
-      <BaseSwiper :cardContents="card" noContainer link="/blog">
+      <BaseSwiper
+        v-if="page?.posts?.data?.posts.length > 0"
+        :cardContents="page.posts.data.posts"
+        noContainer
+        link="/blog"
+      >
         <slot>
-          <span class="swiper__wrapper-title"> Блог </span>
+          <span class="swiper__wrapper-title">
+            {{ page.posts.data.posts.title || "Статті" }}
+          </span>
         </slot>
         <template #slide="{ item }">
           <CardBlog :data="item" />
@@ -341,10 +192,16 @@ onBeforeUnmount(() => {
 
       <div v-if="page?.harmony_tech?.data" class="container">
         <section ref="counterSection" class="home__counter-wrapper">
-          <div v-if="page?.harmony_tech?.data?.title" class="home__counter-title">
+          <div
+            v-if="page?.harmony_tech?.data?.title"
+            class="home__counter-title"
+          >
             {{ page.harmony_tech.data.title || "" }}
           </div>
-          <div v-if="page?.harmony_tech?.data?.subtitle" class="home__counter-subtitle">
+          <div
+            v-if="page?.harmony_tech?.data?.subtitle"
+            class="home__counter-subtitle"
+          >
             {{ page.harmony_tech.data.subtitle || "" }}
           </div>
 
@@ -377,7 +234,8 @@ onBeforeUnmount(() => {
       </div>
 
       <BaseSwiper
-        :cardContents="cardM"
+        v-if="page?.meditations?.data?.posts.length > 0"
+        :cardContents="page.meditations.data.posts"
         noContainer
         link="/meditation"
         :breakpoints="{
@@ -386,7 +244,7 @@ onBeforeUnmount(() => {
         }"
       >
         <slot>
-          <span class="swiper__wrapper-title"> Медитації </span>
+          <span class="swiper__wrapper-title">{{ page?.meditations?.data?.title || "Медитації" }}  </span>
         </slot>
         <template #slide="{ item }">
           <CardMeditation :data="item" />

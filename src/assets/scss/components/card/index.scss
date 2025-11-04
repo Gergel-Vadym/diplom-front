@@ -18,7 +18,7 @@
   }
   &--blog {
     flex-direction: row;
-    width: calc((100% - 60rem) / 2);
+    width: calc((100% - 20rem) / 2);
     gap: 0;
     .card {
       &__img {
@@ -55,9 +55,9 @@
   &__title {
     font: var(--font-mohave-bold-20);
     @include var.ellipsis(2);
+    height: 52rem;
   }
-  &__subtitle {
-    font: var(--font-mohave-med-20);
+    &__subtitle {
     @include var.ellipsis(2);
   }
   &__wrapper {

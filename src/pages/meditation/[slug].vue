@@ -1,7 +1,16 @@
 <script setup>
 const route = useRoute();
 
-const breadcrumbs = ref([
+//API
+const { data: data } = await useAsyncData(
+  () => `meditations-${route?.params?.slug}`,
+  () =>
+    $fetch(`/meditations/${route.params.slug}`, {
+      ...defaultOptions(),
+    })
+);
+
+const breadcrumbs = computed(() => [
   {
     name: "Головна",
     url: "/",
@@ -11,9 +20,10 @@ const breadcrumbs = ref([
     url: "/meditation",
   },
   {
-    name: route?.params?.slug || "",
+    name: data.value?.crumbs?.[1]?.name || "",
   },
 ]);
+
 </script>
 
 <template>
@@ -35,12 +45,9 @@ const breadcrumbs = ref([
           ></video>
         </div>
         <div class="meditation__wrapper">
-          <h1 class="meditation__title">test</h1>
+          <h1 class="meditation__title">{{data?.data?.name || ""}}</h1>
           <div class="meditation__subtitle">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, cum
-            corrupti veritatis asperiores neque perferendis praesentium maxime
-            ipsa eligendi, architecto assumenda numquam quibusdam illo autem
-            quas iste. Consequuntur, saepe quidem.
+          <div v-if="data?.data?.body" class="typography" v-html="data.data.body"></div>
           </div>
         </div>
       </section>
