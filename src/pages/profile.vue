@@ -7,7 +7,6 @@ const { data: profileInfo } = await useAsyncData("profile-info", () =>
   $fetch("/my/profile", { ...defaultOptions() })
 );
 
-console.log(profileInfo.value);
 
 //variables
 const form = ref({

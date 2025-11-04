@@ -31,7 +31,6 @@ const toggleReadMore = () => {
 onMounted(() => {
   document.fonts.ready.then(() => {
     fullHeight.value = contentRef.value.offsetHeight;
-    console.log(fullHeight.value)
     contentRef.value.style.height = `${props.cropHeight}rem`;
   });
 });

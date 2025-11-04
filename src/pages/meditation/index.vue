@@ -1,70 +1,6 @@
 <script setup>
 
 
-const card = ref([
-  {
-    img: "./images/meditation/meditation1.jpg",
-    title: "testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test ",
-    subtitle: "test test test test test testtesttesttesttesttest testtesttest testtesttest testtest testv test test test test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation2.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation3.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation4.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation5.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation6.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation7.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation8.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation9.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-  {
-    img: "./images/meditation/meditation10.jpg",
-    title: "test",
-    subtitle: "test test test test test",
-    link: "/meditation/1",
-  },
-]);
-
-
 const breadcrumbs = ref([
   {
     name: "Головна",
@@ -78,21 +14,32 @@ const breadcrumbs = ref([
 const currentPage = ref(1);
 const perPage = ref(8);
 
-const paginatedResults = computed(() => {
-  const items = card.value || []
-  const start = (currentPage.value - 1) * perPage.value
-  const end = start + perPage.value
-  return items.slice(start, end)
-})
+//API
+
+const { data: meditations, refresh } = await useAsyncData(
+  () => `meditations-page-${currentPage.value}`,
+  () =>
+    $fetch(`/meditations`, {
+      ...defaultOptions(),
+      query: {
+        per_page: perPage.value,
+        page: currentPage.value,
+      },
+    })
+);
+
 
 const paginationMeta = computed(() => {
-  const total = card.value.length
   return {
-    total,
-    per_page: perPage.value,
-    last_page: Math.ceil(total / perPage.value),
-  }
-})
+    total: meditations.value.meta.total,
+    per_page: meditations.value.meta.per_page,
+    last_page: meditations.value.meta.last_page,
+  };
+});
+
+watch(currentPage, async () => {
+  await refresh();
+});
 </script>
 
 <template>
@@ -102,7 +49,7 @@ const paginationMeta = computed(() => {
         <BaseBreadcrumbs :links="breadcrumbs"/>
         <div class="meditations__wrapper">
           <CardMeditation
-            v-for="(card, index) in paginatedResults"
+            v-for="(card, index) in meditations.data"
             :key="`card-meditations-${index}`"
             :data="card"
           />
