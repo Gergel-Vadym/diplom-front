@@ -1,35 +1,30 @@
 <script setup>
 const props = defineProps({
-  label: {
-    type: String,
-    default: "",
-  },
-  placeholder: {
-    type: String,
-    default: "",
-  },
-  type: {
-    type: String,
-    default: "text",
-  },
-  name: {
-    type: String,
-    default: "",
-  },
+  label: String,
+  placeholder: String,
+  type: { type: String, default: "text" },
+  name: String,
+  modelValue: String,
+});
+
+const emit = defineEmits(["update:modelValue"]);
+
+const value = computed({
+  get: () => props.modelValue,
+  set: (val) => emit("update:modelValue", val),
 });
 </script>
 
 <template>
-  <div
-    class="textarea"
-  >
-  <div class="textarea__label">
-    {{ label }}
-  </div>
+  <div class="textarea">
+    <div class="textarea__label">
+      {{ label }}
+    </div>
+
     <textarea
+      v-model="value"
       :name="name"
       :placeholder="placeholder"
     ></textarea>
-
   </div>
 </template>

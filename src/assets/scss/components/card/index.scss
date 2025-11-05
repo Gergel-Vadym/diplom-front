@@ -57,8 +57,9 @@
     @include var.ellipsis(2);
     height: 52rem;
   }
-    &__subtitle {
+  &__subtitle {
     @include var.ellipsis(2);
+    font: var(--font-mohave-med-20);
   }
   &__wrapper {
     display: flex;

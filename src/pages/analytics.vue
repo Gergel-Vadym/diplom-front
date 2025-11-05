@@ -4,9 +4,6 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import Chart from "chart.js/auto";
 
-const date = ref(new Date());
-const activeEmotions = ref([]);
-
 const breadcrumbs = ref([
   {
     name: "Головна",
@@ -17,43 +14,92 @@ const breadcrumbs = ref([
   },
 ]);
 
-const emotions = ref([
-  { name: "Сум", value: 4, color: "#6FA8DC" },
-  { name: "Злість", value: 7, color: "#E06666" },
-  { name: "Радість", value: 9, color: "#FFD966" },
-  { name: "Страх", value: 5, color: "#93C47D" },
-  { name: "Цікавість", value: 8, color: "#8E7CC3" },
-  { name: "Безсилля", value: 3, color: "#76A5AF" },
-  { name: "Натхнення", value: 10, color: "#C27BA0" }
-]);
-
 const loader = ref(false);
 
 const form = ref({
   anxiety: 1,
   mood: 1,
-  info: "",
+  comment: "",
+  emotions: [],
 });
-const toggleEmotion = (value) => {
-  if (activeEmotions.value.includes(value)) {
-    activeEmotions.value = activeEmotions.value.filter((v) => v !== value);
+const toggleEmotion = (id) => {
+  const exists = form.value.emotions.find((e) => e.id === id);
+  if (exists) {
+    form.value.emotions = form.value.emotions.filter((e) => e.id !== id);
   } else {
-    activeEmotions.value.push(value);
+    form.value.emotions.push({ id });
   }
 };
 
 const line = ref(null);
 const bars = ref(null);
 
-const moodData = [
-  5, 6, 10, 4, 3, 8, 1, 5, 7, 4, 6, 5, 7, 8, 4, 5, 6, 7, 5, 6, 4, 5, 7, 6, 5, 9,
-  7, 6, 0, 4, 6,
-];
 
-const anxietyData = [
-  2, 3, 5, 7, 1, 4, 3, 2, 6, 5, 3, 4, 5, 6, 2, 3, 4, 5, 3, 4, 2, 4, 6, 5, 3, 6,
-  5, 4, 2, 3, 4,
-];
+//variables
+
+const date = ref(new Date());
+
+const formatDate = (value) => {
+  const d = new Date(value);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+const handleDateChange = (modelValue) => {
+  date.value = modelValue || new Date();
+};
+
+const formattedDate = computed(() => formatDate(date.value));
+//API
+
+const { data: emotion } = await useAsyncData(
+  () => `my-tracks-emotion`,
+  () =>
+    $fetch(`/my/tracks/form`, {
+      ...defaultOptions(),
+    })
+);
+const { data: tracks, refresh: tracksRefresh } = await useAsyncData(
+  () => `my-tracks`,
+  () =>
+    $fetch(`/my/tracks/${formattedDate.value}/list`, {
+      ...defaultOptions(),
+    })
+);
+
+const onSubmit = async (val, action) => {
+  try {
+    loader.value = true;
+    const data = await $fetch("/my/tracks", {
+      ...defaultOptions(),
+      method: "POST",
+      body: form.value,
+    });
+    customToast("Дані успішно збережено", "success");
+    tracksRefresh();
+    form.value = {
+      anxiety: 0,
+      mood: 0,
+      comment: "",
+      emotions: [],
+    };
+  } catch (error) {
+    console.error(error);
+    action.setErrors(error.data.errors);
+  } finally {
+    loader.value = false;
+  }
+};
+
+const { data: statistic, refresh: statisticRefresh } = await useAsyncData(
+  () => `my-statistic`,
+  () =>
+    $fetch(`/my/tracks/statistic`, {
+      ...defaultOptions(),
+    })
+);
 
 onMounted(() => {
   new Chart(line.value, {
@@ -63,7 +109,9 @@ onMounted(() => {
       datasets: [
         {
           label: "Рівень настрою",
-          data: moodData,
+          data: statistic.value.tracks?.length
+            ? statistic.value.tracks.map((e) => e.mood).reverse()
+            : [],
           borderColor: "#6FA8DC",
           backgroundColor: "#6FA8DC",
           borderWidth: 3,
@@ -73,7 +121,9 @@ onMounted(() => {
         },
         {
           label: "Рівень тривоги",
-          data: anxietyData,
+          data: statistic.value.tracks?.length
+            ? statistic.value.tracks.map((e) => e.anxiety).reverse()
+            : [],
           borderColor: "#E06666",
           backgroundColor: "#E06666",
           borderWidth: 3,
@@ -92,29 +142,7 @@ onMounted(() => {
         },
       },
       scales: {
-        y: {
-          min: 0,
-          max: 10,
-          ticks: {
-            autoSkip: false,
-            padding: 0,
-            maxRotation: 0,
-          },
-        },
-        x: {
-          ticks: {
-            autoSkip: false,
-            padding: 0,
-            maxRotation: 0,
-            callback: (value, index, values) => {
-              return index + 1 === 1 ||
-                index + 1 === values.length ||
-                ((index + 1) % 5 === 0 && values.length - index + 1 >= 5)
-                ? index + 1
-                : "";
-            },
-          },
-        },
+        y: { min: 1, max: 10 },
       },
     },
   });
@@ -122,11 +150,11 @@ onMounted(() => {
   new Chart(bars.value, {
     type: "doughnut",
     data: {
-      labels: emotions.value.map((e) => e.name),
+      labels: statistic.value.emotions.map((e) => e.name),
       datasets: [
         {
-          data: emotions.value.map((e) => e.value),
-          backgroundColor: emotions.value.map((e) => e.color),
+          data: statistic.value.emotions.map((e) => e.count),
+          backgroundColor: statistic.value.emotions.map((e) => e.color),
         },
       ],
     },
@@ -136,6 +164,11 @@ onMounted(() => {
     },
   });
 });
+watch(formattedDate, async () => {
+  await statisticRefresh();
+  await tracksRefresh();
+});
+
 </script>
 
 <template>
@@ -151,9 +184,18 @@ onMounted(() => {
                 v-model="date"
                 :enable-time-picker="false"
                 :inline="true"
+                @update:model-value="handleDateChange"
               />
+              {{ date }}
+              {{ formattedDate }}
               <div class="analytics__block-text">
-                <span class="analytics__block-text-desc">
+                <span
+                  v-if="tracks?.data[0]?.comment"
+                  class="analytics__block-text-info"
+                >
+                  {{ tracks.data[0].comment }}
+                </span>
+                <span v-else class="analytics__block-text-desc">
                   Ваш запис про настрій відсутній
                 </span>
               </div>
@@ -162,72 +204,83 @@ onMounted(() => {
           <div class="analytics__block">
             <h2 class="analytics__block-title">Форма настрою</h2>
             <WrapperLoader v-model="loader">
-              <vee-form class="analytics__form">
-                <div class="analytics__form-slider">
-                  <div class="analytics__form-slider__wrapper">
-                    <div class="analytics__form-slider-title">
-                      Вкажіть свій рівень настрою
+              <ClientOnly>
+                <vee-form @submit="onSubmit" class="analytics__form">
+                  <div class="analytics__form-slider">
+                    <div class="analytics__form-slider__wrapper">
+                      <div class="analytics__form-slider-title">
+                        Вкажіть свій рівень настрою
+                      </div>
+                      <Slider
+                        v-model="form.mood"
+                        class="analytics__form-slider__input"
+                        :min="1"
+                        :max="10"
+                        :step="1"
+                        :tooltips="false"
+                      />
                     </div>
-                    <Slider
-                      v-model="form.mood"
-                      class="analytics__form-slider__input"
-                      :min="1"
-                      :max="10"
-                      :step="1"
-                      :tooltips="false"
-                    />
+                    <div class="analytics__form-slider__labels">
+                      <span class="analytics__form-slider__labels-items"
+                        >низький</span
+                      >
+                      <span class="analytics__form-slider__labels-items"
+                        >високий</span
+                      >
+                    </div>
                   </div>
-                  <div class="analytics__form-slider__labels">
-                    <span class="analytics__form-slider__labels-items"
-                      >низький</span
-                    >
-                    <span class="analytics__form-slider__labels-items"
-                      >високий</span
-                    >
-                  </div>
-                </div>
 
-                <div class="analytics__form-emotions">
-                  <button
-                    v-for="(item, index) in emotions"
-                    :key="`analytics__form-emotions__btn-${index}`"
-                    type="button"
-                    class="analytics__form-emotions__btn"
-                    :class="{ active: activeEmotions.includes(item.value) }"
-                    @click="toggleEmotion(item.value)"
+                  <div
+                    v-if="emotion?.form?.emotions.length > 0"
+                    class="analytics__form-emotions"
                   >
-                    {{ item.name }}
-                  </button>
-                </div>
+                    <button
+                      v-for="(item, index) in emotion.form.emotions"
+                      :key="`analytics__form-emotions__btn-${index}`"
+                      type="button"
+                      class="analytics__form-emotions__btn"
+                      :class="{
+                        active: form.emotions.some((e) => e.id === item.id),
+                      }"
+                      @click="toggleEmotion(item.id)"
+                    >
+                      {{ item.name }}
+                    </button>
+                  </div>
 
-                <div class="analytics__form-slider">
-                  <div class="analytics__form-slider__wrapper">
-                    <div class="form-slider-title">
-                      Вкажіть свій рівень тривоги
+                  <div class="analytics__form-slider">
+                    <div class="analytics__form-slider__wrapper">
+                      <div class="form-slider-title">
+                        Вкажіть свій рівень тривоги
+                      </div>
+                      <Slider
+                        v-model="form.anxiety"
+                        class="analytics__form-slider__input"
+                        :min="1"
+                        :max="10"
+                        :step="1"
+                        :tooltips="false"
+                      />
                     </div>
-                    <Slider
-                      v-model="form.anxiety"
-                      class="analytics__form-slider__input"
-                      :min="1"
-                      :max="10"
-                      :step="1"
-                      :tooltips="false"
-                    />
+                    <div class="analytics__form-slider__labels">
+                      <span class="analytics__form-slider__labels-items"
+                        >низький</span
+                      >
+                      <span class="analytics__form-slider__labels-items"
+                        >високий</span
+                      >
+                    </div>
                   </div>
-                  <div class="analytics__form-slider__labels">
-                    <span class="analytics__form-slider__labels-items"
-                      >низький</span
-                    >
-                    <span class="analytics__form-slider__labels-items"
-                      >високий</span
-                    >
-                  </div>
-                </div>
 
-                <FieldsTextarea v-model="form.info" placeholder="Запис про настрій" />
+                  <FieldsTextarea
+                    v-model="form.comment"
+                    name="comment"
+                    placeholder="Запис про настрій"
+                  />
 
-                <button class="btn btn--light">Зберегти</button>
-              </vee-form>
+                  <button class="btn btn--light">Зберегти</button>
+                </vee-form>
+              </ClientOnly>
             </WrapperLoader>
           </div>
           <div class="analytics__block">
