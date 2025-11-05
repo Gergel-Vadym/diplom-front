@@ -19,6 +19,9 @@ const props = defineProps({
       <div class="card__title">
         {{ data?.name || "" }}
       </div>
+      <div class="card__subtitle">
+        {{ data?.teaser || "" }}
+      </div>
     </div>
   </NuxtLink>
 </template>

@@ -28,6 +28,8 @@ const { data: meditations, refresh } = await useAsyncData(
     })
 );
 
+console.log(meditations.value)
+
 
 const paginationMeta = computed(() => {
   return {

@@ -44,7 +44,7 @@ watch(currentPage, async () => {
     <div class="container">
       <div class="blogs">
         <BaseBreadcrumbs :links="breadcrumbs" />
-        <div class="blogs__wrapper">
+        <div v-if="articles?.data" class="blogs__wrapper">
           <CardBlog
             v-for="(card, index) in articles.data"
             :key="`card-blogs-${index}`"
