@@ -102,7 +102,7 @@ const { data: statistic, refresh: statisticRefresh } = await useAsyncData(
 );
 
 onMounted(() => {
-  lineChart = new Chart(line.value, {
+  new Chart(line.value, {
     type: "line",
     data: {
       labels: Array.from({ length: 31 }, (_, i) => i + 1),
@@ -147,7 +147,7 @@ onMounted(() => {
     },
   });
 
-  barsChart = new Chart(bars.value, {
+  new Chart(bars.value, {
     type: "doughnut",
     data: {
       labels: statistic.value.emotions.map((e) => e.name),
