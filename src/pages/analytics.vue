@@ -5,13 +5,8 @@ import "@vuepic/vue-datepicker/dist/main.css";
 import Chart from "chart.js/auto";
 
 const breadcrumbs = ref([
-  {
-    name: "Головна",
-    url: "/",
-  },
-  {
-    name: "Аналітика",
-  },
+  { name: "Головна", url: "/" },
+  { name: "Аналітика" },
 ]);
 
 const loader = ref(false);
@@ -22,6 +17,7 @@ const form = ref({
   comment: "",
   emotions: [],
 });
+
 const toggleEmotion = (id) => {
   const exists = form.value.emotions.find((e) => e.id === id);
   if (exists) {
@@ -33,12 +29,11 @@ const toggleEmotion = (id) => {
 
 const line = ref(null);
 const bars = ref(null);
+let lineChart = null;
+let barsChart = null;
 
-
-//variables
-
+// variables
 const date = ref(new Date());
-
 const formatDate = (value) => {
   const d = new Date(value);
   const year = d.getFullYear();
@@ -46,45 +41,36 @@ const formatDate = (value) => {
   const day = String(d.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
-
 const handleDateChange = (modelValue) => {
   date.value = modelValue || new Date();
 };
-
 const formattedDate = computed(() => formatDate(date.value));
-//API
 
+// API
 const { data: emotion } = await useAsyncData(
   () => `my-tracks-emotion`,
-  () =>
-    $fetch(`/my/tracks/form`, {
-      ...defaultOptions(),
-    })
+  () => $fetch(`/my/tracks/form`, { ...defaultOptions() })
 );
+
 const { data: tracks, refresh: tracksRefresh } = await useAsyncData(
   () => `my-tracks`,
-  () =>
-    $fetch(`/my/tracks/${formattedDate.value}/list`, {
-      ...defaultOptions(),
-    })
+  () => $fetch(`/my/tracks/${formattedDate.value}/list`, { ...defaultOptions() })
 );
 
 const onSubmit = async (val, action) => {
   try {
     loader.value = true;
-    const data = await $fetch("/my/tracks", {
+    await $fetch("/my/tracks", {
       ...defaultOptions(),
       method: "POST",
       body: form.value,
     });
     customToast("Дані успішно збережено", "success");
-    tracksRefresh();
-    form.value = {
-      anxiety: 0,
-      mood: 0,
-      comment: "",
-      emotions: [],
-    };
+    await tracksRefresh();
+    await statisticRefresh();
+    await nextTick();
+    updateCharts();
+    form.value = { anxiety: 1, mood: 1, comment: "", emotions: [] };
   } catch (error) {
     console.error(error);
     action.setErrors(error.data.errors);
@@ -95,39 +81,31 @@ const onSubmit = async (val, action) => {
 
 const { data: statistic, refresh: statisticRefresh } = await useAsyncData(
   () => `my-statistic`,
-  () =>
-    $fetch(`/my/tracks/statistic`, {
-      ...defaultOptions(),
-    })
+  () => $fetch(`/my/tracks/statistic`, { ...defaultOptions() })
 );
 
-onMounted(() => {
-  new Chart(line.value, {
+// === Chart.js helpers ===
+function createLineChart() {
+  return new Chart(line.value, {
     type: "line",
     data: {
       labels: Array.from({ length: 31 }, (_, i) => i + 1),
       datasets: [
         {
           label: "Рівень настрою",
-          data: statistic.value.tracks?.length
-            ? statistic.value.tracks.map((e) => e.mood).reverse()
-            : [],
+          data: statistic.value?.tracks?.map((e) => e.mood).reverse() ?? [],
           borderColor: "#6FA8DC",
           backgroundColor: "#6FA8DC",
           borderWidth: 3,
-          cubicInterpolationMode: "monotone",
           tension: 0.4,
           pointRadius: 2,
         },
         {
           label: "Рівень тривоги",
-          data: statistic.value.tracks?.length
-            ? statistic.value.tracks.map((e) => e.anxiety).reverse()
-            : [],
+          data: statistic.value?.tracks?.map((e) => e.anxiety).reverse() ?? [],
           borderColor: "#E06666",
           backgroundColor: "#E06666",
           borderWidth: 3,
-          cubicInterpolationMode: "monotone",
           tension: 0.4,
           pointRadius: 2,
         },
@@ -135,40 +113,56 @@ onMounted(() => {
     },
     options: {
       maintainAspectRatio: false,
-      plugins: {
-        legend: { position: "top" },
-        title: {
-          text: "Рівень настрою та тривоги за місяць",
-        },
-      },
-      scales: {
-        y: { min: 1, max: 10 },
-      },
+      responsive: true,
+      scales: { y: { min: 1, max: 10 } },
+      plugins: { legend: { position: "top" } },
     },
   });
+}
 
-  new Chart(bars.value, {
+function createBarsChart() {
+  return new Chart(bars.value, {
     type: "doughnut",
     data: {
-      labels: statistic.value.emotions.map((e) => e.name),
+      labels: statistic.value?.emotions?.map((e) => e.name) ?? [],
       datasets: [
         {
-          data: statistic.value.emotions.map((e) => e.count),
-          backgroundColor: statistic.value.emotions.map((e) => e.color),
+          data: statistic.value?.emotions?.map((e) => e.count) ?? [],
+          backgroundColor: statistic.value?.emotions?.map((e) => e.color) ?? [],
         },
       ],
     },
-    options: {
-      responsive: true,
-      cutout: "40%",
-    },
+    options: { responsive: true, cutout: "40%" },
   });
+}
+
+function updateCharts() {
+  if (lineChart && statistic.value?.tracks?.length) {
+    lineChart.data.datasets[0].data = statistic.value.tracks.map((e) => e.mood).reverse();
+    lineChart.data.datasets[1].data = statistic.value.tracks.map((e) => e.anxiety).reverse();
+    lineChart.update();
+  }
+
+  if (barsChart && statistic.value?.emotions?.length) {
+    barsChart.data.labels = statistic.value.emotions.map((e) => e.name);
+    barsChart.data.datasets[0].data = statistic.value.emotions.map((e) => e.count);
+    barsChart.data.datasets[0].backgroundColor = statistic.value.emotions.map((e) => e.color);
+    barsChart.update();
+  }
+}
+
+onMounted(async () => {
+  await nextTick();
+  lineChart = createLineChart();
+  barsChart = createBarsChart();
 });
+
 watch(formattedDate, async () => {
   await statisticRefresh();
   await tracksRefresh();
+  await nextTick();
+  updateCharts();
 });
-
 </script>
 
 <template>
