@@ -1,4 +1,9 @@
+@use "./variables" as var;
+
 .breadcrumbs {
+  height: 40rem;
+  overflow: auto;
+  @include var.scrollbar(horizontal);
   &__list {
     display: flex;
     flex-direction: row;
@@ -13,10 +18,11 @@
       opacity: 1;
     }
   }
-  &__item{
+  &__item {
     display: flex;
     flex-direction: row;
     gap: 5rem;
     align-items: center;
+    white-space: nowrap;
   }
 }

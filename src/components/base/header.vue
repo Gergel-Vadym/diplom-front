@@ -6,15 +6,15 @@ import { useModalStore } from "~/store/modal";
 const modalStore = useModalStore();
 const nav = ref([
   {
-    name: "meditation",
+    name: "Медитації",
     link: "/meditation",
   },
   {
-    name: "analytics",
+    name: "Аналітика",
     link: "/analytics",
   },
   {
-    name: "blog",
+    name: "Блог",
     link: "/blog",
   },
 ]);

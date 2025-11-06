@@ -3,11 +3,9 @@ import Slider from "@vueform/slider";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import Chart from "chart.js/auto";
+import { uk } from "date-fns/locale";
 
-const breadcrumbs = ref([
-  { name: "Головна", url: "/" },
-  { name: "Аналітика" },
-]);
+const breadcrumbs = ref([{ name: "Головна", url: "/" }, { name: "Аналітика" }]);
 
 const loader = ref(false);
 
@@ -54,7 +52,8 @@ const { data: emotion } = await useAsyncData(
 
 const { data: tracks, refresh: tracksRefresh } = await useAsyncData(
   () => `my-tracks`,
-  () => $fetch(`/my/tracks/${formattedDate.value}/list`, { ...defaultOptions() })
+  () =>
+    $fetch(`/my/tracks/${formattedDate.value}/list`, { ...defaultOptions() })
 );
 
 const onSubmit = async (val, action) => {
@@ -81,10 +80,29 @@ const onSubmit = async (val, action) => {
 
 const { data: statistic, refresh: statisticRefresh } = await useAsyncData(
   () => `my-statistic`,
-  () => $fetch(`/my/tracks/statistic`, { ...defaultOptions() })
-);
+  () => {
+    // отримуємо поточну дату з formattedDate
+    const d = new Date(formattedDate.value);
 
-console.log(statistic.value, "statistic")
+    // мінімальне значення — перше число місяця
+    const minDate = new Date(d.getFullYear(), d.getMonth(), 1)
+      .toISOString()
+      .split("T")[0];
+
+    // максимальне значення — останній день місяця
+    const maxDate = new Date(d.getFullYear(), d.getMonth() + 1, 0)
+      .toISOString()
+      .split("T")[0];
+
+    return $fetch(`/my/tracks/statistic`, {
+      ...defaultOptions(),
+      query: {
+        created_at_from: minDate,
+        created_at_to: maxDate,
+      },
+    });
+  }
+);
 
 // === Chart.js helpers ===
 function createLineChart() {
@@ -169,16 +187,24 @@ function createBarsChart() {
 }
 
 function updateCharts() {
-  if (lineChart && statistic.value?.tracks?.length) {
-    lineChart.data.datasets[0].data = statistic.value.tracks.map((e) => e.mood).reverse();
-    lineChart.data.datasets[1].data = statistic.value.tracks.map((e) => e.anxiety).reverse();
+  if (lineChart) {
+    const moods = statistic.value?.tracks?.map((e) => e.mood).reverse() ?? [];
+    const anxieties =
+      statistic.value?.tracks?.map((e) => e.anxiety).reverse() ?? [];
+
+    lineChart.data.datasets[0].data = moods;
+    lineChart.data.datasets[1].data = anxieties;
     lineChart.update();
   }
 
-  if (barsChart && statistic.value?.emotions?.length) {
-    barsChart.data.labels = statistic.value.emotions.map((e) => e.name);
-    barsChart.data.datasets[0].data = statistic.value.emotions.map((e) => e.count);
-    barsChart.data.datasets[0].backgroundColor = statistic.value.emotions.map((e) => e.color);
+  if (barsChart) {
+    const labels = statistic.value?.emotions?.map((e) => e.name) ?? [];
+    const counts = statistic.value?.emotions?.map((e) => e.count) ?? [];
+    const colors = statistic.value?.emotions?.map((e) => e.color) ?? [];
+
+    barsChart.data.labels = labels;
+    barsChart.data.datasets[0].data = counts;
+    barsChart.data.datasets[0].backgroundColor = colors;
     barsChart.update();
   }
 }
@@ -210,10 +236,10 @@ watch(formattedDate, async () => {
                 v-model="date"
                 :enable-time-picker="false"
                 :inline="true"
+                locale="uk"
                 @update:model-value="handleDateChange"
+                :auto-apply="true"
               />
-              {{ date }}
-              {{ formattedDate }}
               <div class="analytics__block-text">
                 <span
                   v-if="tracks?.data[0]?.comment"
