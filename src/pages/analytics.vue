@@ -84,6 +84,8 @@ const { data: statistic, refresh: statisticRefresh } = await useAsyncData(
   () => $fetch(`/my/tracks/statistic`, { ...defaultOptions() })
 );
 
+console.log(statistic.value, "statistic")
+
 // === Chart.js helpers ===
 function createLineChart() {
   return new Chart(line.value, {
@@ -96,6 +98,7 @@ function createLineChart() {
           data: statistic.value?.tracks?.map((e) => e.mood).reverse() ?? [],
           borderColor: "#6FA8DC",
           backgroundColor: "#6FA8DC",
+          cubicInterpolationMode: "monotone",
           borderWidth: 3,
           tension: 0.4,
           pointRadius: 2,
@@ -105,6 +108,7 @@ function createLineChart() {
           data: statistic.value?.tracks?.map((e) => e.anxiety).reverse() ?? [],
           borderColor: "#E06666",
           backgroundColor: "#E06666",
+          cubicInterpolationMode: "monotone",
           borderWidth: 3,
           tension: 0.4,
           pointRadius: 2,
@@ -113,9 +117,37 @@ function createLineChart() {
     },
     options: {
       maintainAspectRatio: false,
-      responsive: true,
-      scales: { y: { min: 1, max: 10 } },
-      plugins: { legend: { position: "top" } },
+      plugins: {
+        legend: { position: "top" },
+        title: {
+          text: "Рівень настрою та тривоги за місяць",
+        },
+      },
+      scales: {
+        y: {
+          min: 1,
+          max: 10,
+          ticks: {
+            autoSkip: false,
+            padding: 0,
+            maxRotation: 0,
+          },
+        },
+        x: {
+          ticks: {
+            autoSkip: false,
+            padding: 0,
+            maxRotation: 0,
+            callback: (value, index, values) => {
+              return index + 1 === 1 ||
+                index + 1 === values.length ||
+                ((index + 1) % 5 === 0 && values.length - index + 1 >= 5)
+                ? index + 1
+                : "";
+            },
+          },
+        },
+      },
     },
   });
 }
