@@ -73,7 +73,7 @@ const social = ref([
         </nav>
       <div class="footer__line"></div>
       <div class="footer__copyright">
-        Copyright ® 2021 Breez Всі права захищені
+        Copyright ® 2025 Гергель Вадим Всі права захищені
       </div>
     </div>
   </footer>

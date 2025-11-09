@@ -3,6 +3,9 @@
   .card {
     &--meditation {
       width: calc((100% - 30rem) / 2);
+      .card__img-wrapper {
+        height: 250rem;
+      }
     }
     &--blog {
       width: 100%;
@@ -16,6 +19,9 @@
   .card {
     &--meditation {
       width: 100%;
+      .card__img-wrapper {
+        height: 200rem;
+      }
     }
     &--blog {
       .card {

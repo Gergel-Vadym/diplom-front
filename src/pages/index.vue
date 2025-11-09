@@ -30,7 +30,6 @@ const { data: page } = await useAsyncData(
   }
 );
 
-
 //metods
 // --- SLIDES ---
 const slide = ref([]);
@@ -191,7 +190,7 @@ onBeforeUnmount(() => {
       </BaseSwiper>
 
       <div v-if="page?.harmony_tech?.data" class="container">
-        <section ref="counterSection" class="home__counter-wrapper">
+        <div ref="counterSection" class="home__counter-wrapper">
           <div
             v-if="page?.harmony_tech?.data?.title"
             class="home__counter-title"
@@ -211,26 +210,28 @@ onBeforeUnmount(() => {
               :key="`home-counter-${index}`"
             >
               <div v-if="item?.desc && item?.count" class="home__counter">
-                <NuxtImg
-                  :src="item.img"
-                  :alt="item.title"
-                  width="40"
-                  height="40"
-                  class="home__counter-img"
-                />
                 <div class="home__counter-info">
                   <div class="home__counter-count">
-                    <span class="home__counter-value">
-                      {{ item.current }}
-                    </span>
+                    <NuxtImg
+                      :src="item.img"
+                      :alt="item.title"
+                      width="40"
+                      height="40"
+                      class="home__counter-img"
+                    />
+                    <div class="home__counter-value">
+                      {{ item.current }} 
+                    </div>
                     <span> + </span>
                   </div>
                   <span class="home__counter-name">{{ item.desc }}</span>
                 </div>
               </div>
+              <div v-if="index < counter.length - 1" class="home__counter-line"></div>
+              
             </template>
           </div>
-        </section>
+        </div>
       </div>
 
       <BaseSwiper
@@ -244,7 +245,9 @@ onBeforeUnmount(() => {
         }"
       >
         <slot>
-          <span class="swiper__wrapper-title">{{ page?.meditations?.data?.title || "Медитації" }}  </span>
+          <span class="swiper__wrapper-title"
+            >{{ page?.meditations?.data?.title || "Медитації" }}
+          </span>
         </slot>
         <template #slide="{ item }">
           <CardMeditation :data="item" />

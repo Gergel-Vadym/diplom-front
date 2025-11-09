@@ -6,7 +6,7 @@
     <BaseHeader/>
     <main class="main">
       <div class="container">
-        <div class="error">
+        <section class="error">
           <h1 class="error__title">
           404
           </h1>
@@ -14,7 +14,7 @@
             Упс. Щось пішло не так
           </div>
           <NuxtLink to="/" class="error__link btn">На головну</NuxtLink>
-        </div>
+        </section>
       </div>
     </main>
     <BaseFooter/>

@@ -238,7 +238,9 @@ watch(formattedDate, async () => {
                 :inline="true"
                 locale="uk"
                 @update:model-value="handleDateChange"
-                :auto-apply="true"
+                select-text="Вибрати"
+                cancel-text="Скасувати"
+                :month-change-on-scroll="false"
               />
               <div class="analytics__block-text">
                 <span

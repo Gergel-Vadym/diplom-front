@@ -37,6 +37,10 @@
       padding: 50rem 100rem 0 0;
       display: flex;
       justify-content: center;
+      .footer__ul{
+        margin-left: auto;
+        gap: 50rem;
+      }
     }
   }
   &__ul {
