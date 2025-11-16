@@ -5,25 +5,9 @@
   .profile {
     &__wrapper {
       margin-top: 70rem;
-      gap: 70rem;
+      gap: 40rem;
       padding: 30rem;
-    }
-    &__form {
-      &-wrapper {
-        .input {
-          width: 100%;
-        }
-      }
-    }
-  }
-}
-@media #{var.$mobile} {
-  .profile {
-    &__wrapper {
-      margin-top: 50rem;
-      gap: 20rem;
       flex-direction: column;
-      padding: 20rem;
     }
     &__left {
       .btn {
@@ -34,16 +18,30 @@
       &-btn--mobile {
         display: flex;
       }
-      &-btns{
+      &-wrapper {
+        .input {
+          width: 100%;
+        }
+      }
+      &-btns {
         display: flex;
         width: 100%;
         flex-direction: row;
         justify-content: space-between;
         gap: 10rem;
-        .btn{
-          width:calc(50% - 5rem);
+        .btn {
+          width: calc(50% - 5rem);
         }
       }
+    }
+  }
+}
+@media #{var.$mobile} {
+  .profile {
+    &__wrapper {
+      margin-top: 50rem;
+      gap: 20rem;
+      padding: 20rem;
     }
   }
 }

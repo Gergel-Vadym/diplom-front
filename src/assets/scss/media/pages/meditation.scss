@@ -12,12 +12,15 @@
         height: 400rem;
       }
     }
+    &__wrapper {
+      gap: 15rem;
+    }
   }
 }
 @media #{var.$mobile} {
   .meditation {
     margin-top: 50rem;
-    gap: 30rem;
+    gap: 15rem;
     &__video {
       border-radius: 20rem;
       &-wrapper {
@@ -25,7 +28,11 @@
         max-height: none;
         width: 320rem;
         height: 200rem;
+        margin-bottom: 10rem;
       }
+    }
+    &__wrapper {
+      gap: 10rem;
     }
   }
 }

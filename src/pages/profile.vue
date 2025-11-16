@@ -68,12 +68,13 @@ const onSubmit = async (val, action) => {
           <WrapperLoader v-model="loader">
             <ClientOnly>
               <vee-form @submit="onSubmit" class="profile__form">
-                <div class="profile__form-wrapper">
-                  <FieldsInput v-model="form.name" name="name" label="Імя" />
+                <div class="profile__form-wrapper"> 
+                  <FieldsInput v-model="form.name" name="name" label="Ваше імя" placeholder="Імя" />
                   <FieldsInput
                     v-model="form.lastname"
                     name="lastname"
-                    label="Прізвище"
+                    label="Ваше прізвище"
+                    placeholder="Прізвище"
                   />
                   <FieldsInput
                     v-model="form.phone"
@@ -85,7 +86,8 @@ const onSubmit = async (val, action) => {
                   <FieldsInput
                     v-model="form.email"
                     name="email"
-                    label="Email"
+                    label="Ваш email"
+                    placeholder="Email"
                   />
                 </div>
                 <div class="profile__form-btns">
