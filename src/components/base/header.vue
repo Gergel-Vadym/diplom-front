@@ -25,7 +25,7 @@ const access_token = useCookie("access_token");
   <header class="header">
     <div class="container">
       <div class="header__wrapper">
-        <NuxtLink to="/" class="header__logo">
+        <NuxtLink to="/" class="header__logo" aria-label="Головна сторінка">
             <BaseIconSvg iconName="logo" width="50" height="50" />
         </NuxtLink>
         <div class="header__right">
@@ -43,10 +43,10 @@ const access_token = useCookie("access_token");
             </ul>
           </nav>
           <div class="header__user-wrapper">
-            <NuxtLink v-show="access_token" class="header__user" to="/profile">
+            <NuxtLink v-show="access_token" class="header__user" to="/profile" aria-label="Профіль">
               <BaseIconSvg iconName="user" width="24" height="24" customClass="header__user-icon header__user-icon--login"/>
             </NuxtLink> 
-             <button v-show="!access_token" @click="modalStore.toggleModal('login')" class="header__user">
+             <button v-show="!access_token" @click="modalStore.toggleModal('login')" class="header__user" aria-label="Реєстрація">
               <BaseIconSvg iconName="user" width="24" height="24" customClass="header__user-icon" />
             </button>
           </div>

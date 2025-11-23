@@ -38,6 +38,9 @@ const breadcrumbs = computed(() => [
             class="blog__img"
             width="1100"
             height="615"
+            fetchpriority="high"
+            loading="eager"
+            format="webp"
           />
         </div>
         <div class="blog__wrapper">

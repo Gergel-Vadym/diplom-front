@@ -13,6 +13,9 @@ const props = defineProps({
         class="card__img"
         width="415"
         height="415"
+        fetchpriority="low"
+        loading="lazy"
+        format="webp"
       />
     </div>
     <div class="card__info">

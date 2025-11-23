@@ -10,6 +10,7 @@ const checkboxesReadmoreBreakPoints = [
 const counterSection = ref(null);
 
 let intervalId;
+const activeIndex = ref(0);
 
 //api
 const { data: page } = await useAsyncData(
@@ -31,25 +32,18 @@ const { data: page } = await useAsyncData(
 );
 
 //metods
-const slide = ref([]);
+const slides = computed(() => {
+  const items = page.value?.hero?.data?.items ?? [];
+  return items.map((item, i) => ({
+    ...item,
+    active: i === activeIndex.value
+  }));
+});
 
-function initSlides() {
-  if (page.value?.hero?.data?.items?.length) {
-    slide.value = page.value.hero.data.items.map((item, index) => ({
-      ...item,
-      active: index === 0,
-    }));
-  }
-}
-
-function changeActiveSlide() {
-  if (!slide.value.length) return;
-
-  const activeIndex = slide.value.findIndex((slide) => slide.active);
-  slide.value[activeIndex].active = false;
-
-  const nextIndex = (activeIndex + 1) % slide.value.length;
-  slide.value[nextIndex].active = true;
+function nextSlide() {
+  const length = slides.value.length;
+  if (!length) return;
+  activeIndex.value = (activeIndex.value + 1) % length;
 }
 
 // --- COUNTER ---
@@ -89,10 +83,11 @@ const animateCounts = () => {
 };
 
 onMounted(() => {
-  initSlides();
   initCounter();
 
-  intervalId = setInterval(changeActiveSlide, 5000);
+  requestIdleCallback(() => {
+    intervalId.value = setInterval(nextSlide, 5000);
+  });
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -111,7 +106,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  clearInterval(intervalId);
+  clearInterval(intervalId.value);
 });
 </script>
 
@@ -122,9 +117,10 @@ onBeforeUnmount(() => {
         <div v-if="page?.hero?.data?.title" class="home__hero-title">
           {{ page.hero.data.title || "" }}
         </div>
-        <div v-if="slide" class="home__hero-img__wrapper">
+        <div v-if="slides" class="home__hero-img__wrapper">
           <NuxtImg
-            v-for="(item, index) in slide"
+            preload
+            v-for="(item, index) in slides"
             :key="`home__hero-slide-${index}`"
             class="home__hero-img"
             :src="item.img"
@@ -132,12 +128,15 @@ onBeforeUnmount(() => {
             width="830"
             height="550"
             :class="{ active: item.active }"
+            :fetchpriority="index === 0 ? 'high' : 'low'"
+            :loading="index === 0 ? 'eager' : 'lazy'"
+            format="webp"
           />
         </div>
       </div>
 
       <div v-if="page?.support_section?.data" class="container">
-        <section class="home__help">
+        <div class="home__help">
           <div
             v-if="page?.support_section?.data?.title"
             class="home__help-title"
@@ -159,6 +158,9 @@ onBeforeUnmount(() => {
                 width="56"
                 height="56"
                 class="home__help-card__img"
+                fetchpriority="low"
+                loading="lazy"
+                format="webp"
               />
               <div v-if="item?.title" class="home__help-card__title">
                 {{ item.title || "" }}
@@ -168,10 +170,10 @@ onBeforeUnmount(() => {
               </div>
             </div>
           </div>
-        </section>
+        </div>
       </div>
 
-      <BaseSwiper
+      <LazyBaseSwiper
         v-if="page?.posts?.data?.posts.length > 0"
         :cardContents="page.posts.data.posts"
         noContainer
@@ -183,9 +185,9 @@ onBeforeUnmount(() => {
           </span>
         </slot>
         <template #slide="{ item }">
-          <CardBlog :data="item" />
+          <LazyCardBlog :data="item" />
         </template>
-      </BaseSwiper>
+      </LazyBaseSwiper>
 
       <div v-if="page?.harmony_tech?.data" class="container">
         <div ref="counterSection" class="home__counter-wrapper">
@@ -212,27 +214,32 @@ onBeforeUnmount(() => {
                   <div class="home__counter-count">
                     <NuxtImg
                       :src="item.img"
-                      :alt="item.title"
+                      :alt="item.desc"
                       width="40"
                       height="40"
                       class="home__counter-img"
+                      fetchpriority="low"
+                      loading="lazy"
+                      format="webp"
                     />
                     <div class="home__counter-value">
-                      {{ item.current }} 
+                      {{ item.current }}
                     </div>
                     <span> + </span>
                   </div>
                   <span class="home__counter-name">{{ item.desc }}</span>
                 </div>
               </div>
-              <div v-if="index < counter.length - 1" class="home__counter-line"></div>
-              
+              <div
+                v-if="index < counter.length - 1"
+                class="home__counter-line"
+              ></div>
             </template>
           </div>
         </div>
       </div>
 
-      <BaseSwiper
+      <LazyBaseSwiper
         v-if="page?.meditations?.data?.posts.length > 0"
         :cardContents="page.meditations.data.posts"
         noContainer
@@ -248,21 +255,20 @@ onBeforeUnmount(() => {
           </span>
         </slot>
         <template #slide="{ item }">
-          <CardMeditation :data="item" />
+          <LazyCardMeditation :data="item" />
         </template>
-      </BaseSwiper>
+      </LazyBaseSwiper>
 
       <div v-if="page?.data?.body" class="read-more-section">
         <div class="container">
-          <ReadMore
-            customClass="catalog-filter__read-more"
+          <LazyReadMore
             cropHeight="210"
             :breakpoints="checkboxesReadmoreBreakPoints"
           >
             <template #body>
               <div class="typography" v-html="page.data.body"></div>
             </template>
-          </ReadMore>
+          </LazyReadMore>
         </div>
       </div>
     </div>

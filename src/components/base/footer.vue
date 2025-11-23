@@ -33,7 +33,7 @@ const social = ref([
   <footer class="footer">
     <div class="footer__wrapper">
       <div class="footer__logo">
-        <NuxtLink to="/">
+        <NuxtLink to="/" aria-label="Головна сторінка">
           <BaseIconSvg
             iconName="logo-footer"
             width="50"
@@ -49,7 +49,7 @@ const social = ref([
               :key="`footer-nav-${index}`"
               class="footer__li"
             >
-              <NuxtLink :to="item.link" class="footer__link">
+              <NuxtLink :to="item.link" class="footer__link" :aria-label="item.name">
                 {{ item.name }}
               </NuxtLink>
             </li>
@@ -62,7 +62,7 @@ const social = ref([
               :key="`footer-social-${index}`"
               class="footer__li"
             >
-              <NuxtLink :to="item.link" class="footer__social" target="_blank">
+              <NuxtLink :to="item.link" class="footer__social" :aria-label="item.name" target="_blank">
                 <BaseIconSvg
                   :iconName="item.name"
                   width="40"

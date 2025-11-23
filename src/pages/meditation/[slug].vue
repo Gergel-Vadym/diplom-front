@@ -52,6 +52,9 @@ console.log(data.value);
               class="meditation__video"
               width="1720"
               height="900"
+              fetchpriority="high"
+              loading="eager"
+              format="webp"
             />
           </template>
         </div>

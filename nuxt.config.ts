@@ -18,7 +18,16 @@ export default defineNuxtConfig({
 
   app:{
     head:{
+    htmlAttrs: {
+      lang: "uk"
+    },
       title: "Breez",
+      meta: [
+      {
+        name: "description",
+        content: "Breez — це сайт, де ви можете стежити за ментальним здоров’ям, медитувати та розвиватися у сфері емоційного благополуччя."
+      }
+    ],
       link: [
         {
           rel: "icon",

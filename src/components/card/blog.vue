@@ -7,7 +7,16 @@ const props = defineProps({
 <template>
   <NuxtLink :to="`/blog/${data.slug}`" class="card card--blog">
     <div class="card__img-wrapper">
-      <NuxtImg :src="data.image.url" :alt="data.image.name" class="card__img" width="200" height="200" />
+      <NuxtImg
+        :src="data.image.url"
+        :alt="data.image.name"
+        class="card__img"
+        width="200"
+        height="200"
+        fetchpriority="low"
+        loading="lazy"
+        format="webp"
+      />
     </div>
     <div class="card__info">
       <div class="card__wrapper">

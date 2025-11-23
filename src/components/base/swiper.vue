@@ -68,9 +68,11 @@ const btnId = useId();
           v-if="!showBtns"
           class="swiper__wrapper-btns"
           :class="[{'swiper__wrapper-btns--absolute' : btnAbs}]"
+          
         >
           <button
             :class="`swiper-button-prev swiper-button-prev-${btnId} swiper-button`"
+            aria-label="Попередній слайд"
           >
             <BaseIconSvg
               iconName="chevron"
@@ -81,6 +83,7 @@ const btnId = useId();
           </button>
           <button
             :class="`swiper-button-next swiper-button-next-${btnId} swiper-button`"
+            aria-label="Наступний слайд"
           >
             <BaseIconSvg
               iconName="chevron"
