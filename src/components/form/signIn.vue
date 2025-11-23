@@ -2,6 +2,15 @@
 //imports
 import { useModalStore } from "~/store/modal";
 
+//props
+
+const props = defineProps({
+  isLink:{
+    type:Boolean,
+    default: false,
+  }
+})
+
 // variables
 const route = useRoute();
 const modalStore = useModalStore();
@@ -59,7 +68,10 @@ const onSubmit = async (val, action) => {
       <div class="form__info">
         <button class="btn">Увійти</button>
         <div class="form__info-wrapper">
-          <button @click="toogleSignUp" type="button" class="form__btn">
+          <NuxtLink v-if="isLink" to="/registration" class="form__btn">
+            Зареєструватись
+          </NuxtLink>
+          <button v-else @click="toogleSignUp" type="button" class="form__btn">
             Зареєструватись
           </button>
         </div>

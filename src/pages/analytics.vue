@@ -208,18 +208,34 @@ function updateCharts() {
     barsChart.update();
   }
 }
+const isMoodEmpty = computed(() => {
+  return !statistic.value?.tracks || statistic.value.tracks.length === 0;
+});
 
+const isEmotionsEmpty = computed(() => {
+  const emotions = statistic.value?.emotions;
+  if (!Array.isArray(emotions) || emotions.length === 0) return true;
+
+  return !emotions.some((e) => Number(e.count) > 0);
+});
 onMounted(async () => {
   await nextTick();
-  lineChart = createLineChart();
-  barsChart = createBarsChart();
+  if (!isMoodEmpty.value) {
+    lineChart = createLineChart();
+  }
+
+  if (!isEmotionsEmpty.value) {
+    barsChart = createBarsChart();
+  }
 });
 
 watch(formattedDate, async () => {
   await statisticRefresh();
   await tracksRefresh();
   await nextTick();
-  updateCharts();
+  if (!isMoodEmpty.value) {
+    updateCharts();
+  }
 });
 </script>
 
@@ -283,23 +299,26 @@ watch(formattedDate, async () => {
                       >
                     </div>
                   </div>
-
-                  <div
-                    v-if="emotion?.form?.emotions.length > 0"
-                    class="analytics__form-emotions"
-                  >
-                    <button
-                      v-for="(item, index) in emotion.form.emotions"
-                      :key="`analytics__form-emotions__btn-${index}`"
-                      type="button"
-                      class="analytics__form-emotions__btn"
-                      :class="{
-                        active: form.emotions.some((e) => e.id === item.id),
-                      }"
-                      @click="toggleEmotion(item.id)"
+                  <div v-if="emotion?.form?.emotions.length > 0" class="analytics__form-emotions__wrapper">
+                    <div class="form-slider-title">
+                      Виберіть емоції які переважали
+                    </div>
+                    <div
+                      class="analytics__form-emotions"
                     >
-                      {{ item.name }}
-                    </button>
+                      <button
+                        v-for="(item, index) in emotion.form.emotions"
+                        :key="`analytics__form-emotions__btn-${index}`"
+                        type="button"
+                        class="analytics__form-emotions__btn"
+                        :class="{
+                          active: form.emotions.some((e) => e.id === item.id),
+                        }"
+                        @click="toggleEmotion(item.id)"
+                      >
+                        {{ item.name }}
+                      </button>
+                    </div>
                   </div>
 
                   <div class="analytics__form-slider">
@@ -341,8 +360,14 @@ watch(formattedDate, async () => {
             <div class="analytics__chart-wrapper">
               <h2 class="analytics__block-title">Як змінювався мій настрій</h2>
               <div class="analytics__chart">
-                <div class="analytics__chart-container">
+                <div class="analytics__chart-container" v-show="!isMoodEmpty">
                   <canvas ref="line"></canvas>
+                </div>
+
+                <div class="analytics__chart--empty" v-show="isMoodEmpty">
+                  <h3 class="analytics__chart--empty__title">
+                    Ваші дані про настрій відсутні
+                  </h3>
                 </div>
               </div>
             </div>
@@ -351,8 +376,17 @@ watch(formattedDate, async () => {
             <div class="analytics__chart-wrapper">
               <h2 class="analytics__block-title">Які емоції переважали</h2>
               <div class="analytics__chart">
-                <div class="analytics__chart-container">
+                <div
+                  class="analytics__chart-container"
+                  v-show="!isEmotionsEmpty"
+                >
                   <canvas ref="bars"></canvas>
+                </div>
+
+                <div class="analytics__chart--empty" v-show="isEmotionsEmpty">
+                  <h3 class="analytics__chart--empty__title">
+                    Ваші дані про емоції відсутні
+                  </h3>
                 </div>
               </div>
             </div>
