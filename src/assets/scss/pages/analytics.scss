@@ -256,6 +256,11 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10rem;
+      &__wrapper{
+        display: flex;
+        flex-direction: column;
+        gap: 10rem;
+      }
       &__btn {
         font: var(--font-mohave-reg-16);
         padding: 10rem 15rem;
@@ -279,6 +284,15 @@
     height: 100%;
     width: 100%;
     background-color: var(--white);
+    &--empty{
+      display: flex;
+      min-height: 200rem;
+      align-items: center;
+      justify-content: center;
+      &__title{
+        font: var(--font-mohave-med-30);
+      }
+    }
     &-wrapper {
       display: flex;
       flex-direction: column;

@@ -32,7 +32,8 @@ const social = ref([
 <template>
   <footer class="footer">
     <div class="footer__wrapper">
-        <NuxtLink to="/" class="footer__logo">
+      <div class="footer__logo">
+        <NuxtLink to="/">
           <BaseIconSvg
             iconName="logo-footer"
             width="50"
@@ -40,6 +41,7 @@ const social = ref([
             customClass="footer__logo-icon"
           />
         </NuxtLink>
+      </div>
         <nav class="footer__nav">
           <ul class="footer__ul">
             <li

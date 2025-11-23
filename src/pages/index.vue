@@ -31,7 +31,6 @@ const { data: page } = await useAsyncData(
 );
 
 //metods
-// --- SLIDES ---
 const slide = ref([]);
 
 function initSlides() {
@@ -89,7 +88,6 @@ const animateCounts = () => {
   requestAnimationFrame(update);
 };
 
-// --- LIFECYCLE ---
 onMounted(() => {
   initSlides();
   initCounter();

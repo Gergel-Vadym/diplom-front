@@ -7,4 +7,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
   if (to.path.includes('/analytics') && !access_token.value) {
     return navigateTo('/login')
   }
+  if (to.path.includes('/login') && access_token.value) {
+    return navigateTo('/')
+  }
 })
